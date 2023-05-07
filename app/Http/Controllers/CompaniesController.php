@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Companies;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class CompaniesController extends Controller
     public function index()
     {
         $companies = Company::all();
-        return view('company', compact('companies'));
+        return view('company.index', compact('companies'));
     }
 
     /**
@@ -22,15 +23,16 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        //
+        return view('company.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCompanyRequest $request)
     {
-        //
+        $validated = $request->validated();
+        dd($validated);
     }
 
     /**
@@ -46,7 +48,7 @@ class CompaniesController extends Controller
      */
     public function edit(Company $Company)
     {
-        //
+        
     }
 
     /**

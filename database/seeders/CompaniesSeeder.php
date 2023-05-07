@@ -16,12 +16,12 @@ class CompaniesSeeder extends Seeder
         DB::table('Companies')->insert([
             [
                 'nama_perusahaan' => 'pemerintah',
-                'logo' => 'logo.png',
+                'logo' => '../logo.jpg',
                 'is_public' => true
             ],
             [
                 'nama_perusahaan' => 'multi data palembang',
-                'logo' => 'logo.png',
+                'logo' => '../logo.jpg',
                 'is_public' => false
             ],
         ]);
