@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $this->authsorize('viewAny', Company::class);
+        // $this->authorize('viewAny', Company::class);
 
         if(auth()->user()->role_id === Role::$IS_SUPERADMIN) {
             if (request('search')) {

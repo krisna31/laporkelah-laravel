@@ -178,7 +178,9 @@
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td class="px-6 py-4 text-center" colspan="3">
                                             <blockquote>
-                                                <p class="text-2xl font-semibold text-gray-900 dark:text-white uppercase text-center">Data Kosong</p>
+                                                <p
+                                                    class="text-2xl font-semibold text-gray-900 dark:text-white uppercase text-center">
+                                                    Data Kosong</p>
                                             </blockquote>
                                         </td>
                                     </tr>
