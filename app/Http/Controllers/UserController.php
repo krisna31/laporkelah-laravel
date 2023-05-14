@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Role;
+use App\Models\TemporaryFile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -34,7 +37,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        // $this->authorize('create', Company::class);
+        $companies = Company::all();
+        $roles = Role::all();
+
+        return view('user.create', compact('companies', 'roles'));
     }
 
     /**
@@ -42,7 +49,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        // $this->authorize('create', Company::class);
+
+        // validate request
+        $validated = $request->validated();
+        $tempFile = TemporaryFile::where('folder', $request->img)->first();
+        if ($tempFile) {
+            $filename = uniqid() . '-' . $tempFile->filename;
+
+            // Store the image at the specified path.
+            File::copy(
+                storage_path("app\\img\\tmp\\$tempFile->folder\\$tempFile->filename"),
+                storage_path("app\\public\\company\\$filename")
+            );
+
+            // Get the logo file name.
+            $validated['logo'] = $filename;
+            File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
+            $tempFile->delete();
+
+            // Create a project with the validated data.
+            User::create($validated);
+            // Redirect the user to the project list.
+            return redirect()->route('user.index')->with('success', "Data user $request->nama Berhasil Dibuat");
+        }
+
+        return redirect()->route('user.index')->with('failed', "Data user $request->nama Gagal Dibuat");
     }
 
     /**

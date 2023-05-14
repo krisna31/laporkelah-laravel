@@ -93,13 +93,13 @@
                                         Nama User
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Email
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         Role
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Company
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -107,20 +107,15 @@
                                 @forelse ($users as $user)
                                     <tr
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td scope="row"
+                                        <th scope="row"
                                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-10 h-10 rounded-full"
+                                                src="storage/user/{{ $user->foto }}" alt="{{ $user->nama }}">
                                             <div class="pl-3">
                                                 <div class="text-base font-semibold">{{ $user->nama }}
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td scope="row"
-                                            class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                            <div class="pl-3">
-                                                <div class="text-base font-semibold">{{ $user->email }}
-                                                </div>
-                                            </div>
-                                        </td>
+                                        </th>
                                         <td class="px-6 py-4">
                                             {{ $user->role->jabatan }}
                                         </td>
