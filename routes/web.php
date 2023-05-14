@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\SuperAdmin\CompanyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,16 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::redirect('/', '/login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('company', CompaniesController::class);
+    Route::resource('company', CompanyController::class);
+    Route::post('upload', [UploadController::class,'store']);
+    Route::delete('upload', [UploadController::class,'destroy']);
 });
 
 Route::middleware('auth')->group(function () {

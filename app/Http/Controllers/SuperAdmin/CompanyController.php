@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SuperAdmin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompanyRequest;
-use App\Models\Companies;
 use App\Models\Company;
+use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
-class CompaniesController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,8 +33,28 @@ class CompaniesController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
+        // validate request
         $validated = $request->validated();
-        dd($validated);
+        $tempFile = TemporaryFile::where('folder', $request->logo)->first();
+        $filename = uniqid() . '-' . $tempFile->filename;
+
+        // Store the image at the specified path.
+        FIle::copy(storage_path("app\\company\\tmp\\$tempFile->folder\\$tempFile->filename"),
+             storage_path("app\\public\\company\\$filename"));
+
+        // Get the logo file name.
+        $validated['logo'] = $filename;
+
+        // Create a project with the validated data.
+        Company::create($validated);
+
+        if ($tempFile) {
+            File::deleteDirectory(storage_path("app\\company\\tmp\\$tempFile->folder"));
+        }
+        $tempFile->delete();
+
+        // Redirect the user to the project list.
+        return redirect()->route('company.index')->with('success', "Data Company $request->nama Berhasil Dibuat");
     }
 
     /**
@@ -48,7 +70,7 @@ class CompaniesController extends Controller
      */
     public function edit(Company $Company)
     {
-        
+
     }
 
     /**

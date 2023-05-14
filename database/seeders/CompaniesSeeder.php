@@ -15,14 +15,9 @@ class CompaniesSeeder extends Seeder
     {
         DB::table('Companies')->insert([
             [
-                'nama_perusahaan' => 'pemerintah',
+                'nama' => 'pemerintah',
                 'logo' => '../logo.jpg',
                 'is_public' => true
-            ],
-            [
-                'nama_perusahaan' => 'multi data palembang',
-                'logo' => '../logo.jpg',
-                'is_public' => false
             ],
         ]);
     }

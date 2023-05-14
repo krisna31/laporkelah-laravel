@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCompanyRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreCompanyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->role_id === 1;
+        return in_array(auth()->user()->role_id, [Role::$IS_SUPERADMIN]);
     }
 
     /**
@@ -22,9 +23,9 @@ class StoreCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255|min:1|required',
-            'logo' => 'image',
-            'is_public' => 'boolean'
+            'nama' => 'string|max:255|min:1|required',
+            'logo' => 'required',
+            'is_public' => 'boolean|required'
         ];
     }
 }
