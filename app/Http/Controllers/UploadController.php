@@ -10,14 +10,11 @@ class UploadController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'logo' => 'required|image'
-        ]);
-        if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
             $folder = uniqid() . '-' . now()->timestamp;
             $filename = $file->getClientOriginalName();
-            $file->storeAs('company/tmp/' . $folder, $filename);
+            $file->storeAs('img/tmp/' . $folder, $filename);
 
             TemporaryFile::create([
                 'folder' => $folder,
@@ -34,7 +31,7 @@ class UploadController extends Controller
     {
         $tempFile = TemporaryFile::where('folder', $request->getContent())->first();
         if ($tempFile) {
-            File::deleteDirectory(storage_path("app\\company\\tmp\\$tempFile->folder"));
+            File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
             $tempFile->delete();
         }
     }

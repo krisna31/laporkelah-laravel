@@ -31,9 +31,9 @@
 
                         <!-- logo -->
                         <div class="mt-4">
-                            <x-input-label for="logo" :value="__('Logo Perusahaan')" class="mb-4" />
-                            <x-input-error :messages="$errors->get('logo')" />
-                            <input type="file" name="logo" id="logo">
+                            <x-input-label for="img" :value="__('Logo Perusahaan')" class="mb-4" />
+                            <x-input-error :messages="$errors->get('img')" />
+                            <input type="file" name="img" id="img">
                         </div>
 
                         <!-- is_public -->

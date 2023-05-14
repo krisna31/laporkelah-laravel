@@ -35,11 +35,11 @@ class CompanyController extends Controller
     {
         // validate request
         $validated = $request->validated();
-        $tempFile = TemporaryFile::where('folder', $request->logo)->first();
+        $tempFile = TemporaryFile::where('folder', $request->img)->first();
         $filename = uniqid() . '-' . $tempFile->filename;
 
         // Store the image at the specified path.
-        FIle::copy(storage_path("app\\company\\tmp\\$tempFile->folder\\$tempFile->filename"),
+        FIle::copy(storage_path("app\\img\\tmp\\$tempFile->folder\\$tempFile->filename"),
              storage_path("app\\public\\company\\$filename"));
 
         // Get the logo file name.
@@ -49,7 +49,7 @@ class CompanyController extends Controller
         Company::create($validated);
 
         if ($tempFile) {
-            File::deleteDirectory(storage_path("app\\company\\tmp\\$tempFile->folder"));
+            File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
         }
         $tempFile->delete();
 

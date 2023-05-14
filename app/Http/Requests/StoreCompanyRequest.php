@@ -24,7 +24,6 @@ class StoreCompanyRequest extends FormRequest
     {
         return [
             'nama' => 'string|max:255|min:1|required',
-            'logo' => 'required',
             'is_public' => 'boolean|required'
         ];
     }
