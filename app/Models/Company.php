@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     use HasFactory;
-
     protected $fillable = ['nama', 'logo', 'is_public'];
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 }

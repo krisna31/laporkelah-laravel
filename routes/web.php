@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\SuperAdmin\CompanyController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
