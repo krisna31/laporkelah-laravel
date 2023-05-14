@@ -75,7 +75,12 @@
     @section('script')
         <script type="module">
             const inputElement = document.querySelector('input[type="file"]');
-            const pond = FilePond.create(inputElement);
+            const pond = FilePond.create(inputElement, {
+                acceptedFileTypes: ['image/*'],
+                imageValidateSizeMaxWidth: 1440,
+                imageValidateSizeMaxHeight: 1440,
+                maxTotalFileSize: 2097152
+            });
 
             FilePond.setOptions({
                 server: {
