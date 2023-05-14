@@ -53,12 +53,8 @@ class CompanyController extends Controller
         // validate request
         $validated = $request->validated();
         $tempFile = TemporaryFile::where('folder', $request->img)->first();
-        dd($request);
-        // dd(TemporaryFile::where(['folder'=>$request->img])->get());
         if ($tempFile) {
             $filename = uniqid() . '-' . $tempFile->filename;
-            File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
-            $tempFile->delete();
 
             // Store the image at the specified path.
             File::copy(
@@ -68,6 +64,8 @@ class CompanyController extends Controller
 
             // Get the logo file name.
             $validated['logo'] = $filename;
+            File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
+            $tempFile->delete();
 
             // Create a project with the validated data.
             Company::create($validated);
@@ -85,7 +83,7 @@ class CompanyController extends Controller
     {
         $this->authorize('view', $company);
 
-        return view('superadmin.company.show', compact('company'));
+        return view('company.show', compact('company'));
     }
 
     /**
@@ -96,7 +94,7 @@ class CompanyController extends Controller
         $this->authorize('update', $company);
 
 
-        return view('superadmin.company.edit', compact('company'));
+        return view('company.edit', compact('company'));
     }
 
     /**

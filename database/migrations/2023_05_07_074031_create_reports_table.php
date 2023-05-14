@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('title');
             $table->text('keterangan');
             $table->boolean('status');
-            $table->text('foto');
+            $table->text('foto')->unique();
             $table->timestamps();
         });
     }

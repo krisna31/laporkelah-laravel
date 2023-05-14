@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('company', CompanyController::class);
+    Route::resource('user', UserController::class);
     Route::post('upload', [UploadController::class,'store']);
     Route::delete('upload', [UploadController::class,'destroy']);
 });

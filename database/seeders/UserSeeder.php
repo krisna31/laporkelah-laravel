@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
                 'email' => 'superadmin@gmail.com',
                 'password' => bcrypt('superadmin'),
                 'role_id' => 1,
+                'foto' => 'abdddc',
                 'company_id' => null
             ],
             [
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('admin'),
                 'role_id' => 2,
+                'foto' => 'asbc',
                 'company_id' => 1
             ],
             [
@@ -33,6 +35,7 @@ class UserSeeder extends Seeder
                 'email' => 'user@gmail.com',
                 'password' => bcrypt('user'),
                 'role_id' => 3,
+                'foto' => 'adbc',
                 'company_id' => 1
             ]
         ]);
