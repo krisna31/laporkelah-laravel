@@ -8,6 +8,7 @@ use App\Models\TemporaryFile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -18,7 +19,7 @@ class UserController extends Controller
     {
         // $this->authorize('viewAny', Company::class);
 
-        if(auth()->user()->role_id === Role::$IS_SUPERADMIN) {
+        if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
             if (request('search')) {
                 $users = User::where('nama', 'LIKE', '%' . request('search') . '%')->paginate(5);
             } else {
@@ -57,6 +58,11 @@ class UserController extends Controller
         $tempFile = TemporaryFile::where('folder', $request->img)->first();
         if ($tempFile) {
             $filename = uniqid() . '-' . $tempFile->filename;
+
+            // check folder exist or not
+            if (!Storage::exists("app\\public\\company")) {
+                File::makeDirectory(storage_path("app\\public\\company"), $mode = 0777, true, true);
+            }
 
             // Store the image at the specified path.
             File::copy(
