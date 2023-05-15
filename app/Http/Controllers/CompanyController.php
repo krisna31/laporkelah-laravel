@@ -19,7 +19,7 @@ class CompanyController extends Controller
     {
         $this->authorize('viewAny', Company::class);
 
-        if(auth()->user()->role_id === Role::$IS_SUPERADMIN) {
+        if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
             if (request('search')) {
                 $companies = Company::where('nama', 'LIKE', '%' . request('search') . '%')->paginate(5);
             } else {
@@ -55,6 +55,11 @@ class CompanyController extends Controller
         $tempFile = TemporaryFile::where('folder', $request->img)->first();
         if ($tempFile) {
             $filename = uniqid() . '-' . $tempFile->filename;
+
+            // check folder exist or not
+            if (!Storage::exists("app\\public\\company")) {
+                File::makeDirectory(storage_path("app\\public\\company"), $mode = 0777, true, true);
+            }
 
             // Store the image at the specified path.
             File::copy(
@@ -141,7 +146,8 @@ class CompanyController extends Controller
         $this->authorize('delete', $company);
         $success = $company->deleteOrFail();
 
-        if ($success) return redirect()->route('company.index')->with('success', 'Data Berhasil Dihapus');
+        if ($success)
+            return redirect()->route('company.index')->with('success', 'Data Berhasil Dihapus');
 
         return redirect()->route('company.index')->with('failed', 'Data ' . $company->nama . ' Gagal Dihapus');
     }
