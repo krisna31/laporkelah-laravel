@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\web\CommentController;
+use App\Http\Controllers\web\ReportController;
+use App\Http\Controllers\web\RoleController;
 use App\Http\Controllers\web\ProfileController;
 use App\Http\Controllers\web\UploadController;
 use App\Http\Controllers\web\UserController;
@@ -29,6 +32,9 @@ Route::middleware(['auth', 'verified', 'can:isAdmin'])->group(function () {
     })->name('dashboard');
     Route::resource('company', WebCompanyController::class);
     Route::resource('user', UserController::class);
+    Route::resource('role', RoleController::class);
+    Route::resource('report', ReportController::class);
+    Route::resource('comment', CommentController::class);
     Route::post('upload', [UploadController::class, 'store']);
     Route::delete('upload', [UploadController::class, 'destroy']);
 });
