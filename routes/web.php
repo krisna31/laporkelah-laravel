@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UploadController;
-use App\Http\Controllers\UserController;
-use App\Models\Role;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\web\ProfileController;
+use App\Http\Controllers\web\UploadController;
+use App\Http\Controllers\web\UserController;
+use App\Http\Controllers\web\CompanyController as WebCompanyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +27,7 @@ Route::middleware(['auth', 'verified', 'can:isAdmin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::resource('company', CompanyController::class);
+    Route::resource('company', WebCompanyController::class);
     Route::resource('user', UserController::class);
     Route::post('upload', [UploadController::class, 'store']);
     Route::delete('upload', [UploadController::class, 'destroy']);
