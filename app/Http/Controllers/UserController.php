@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateRoleRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Company;
 use App\Models\Role;
@@ -12,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -21,20 +21,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $this->authorize('viewAny', Company::class);
+        $this->authorize('viewAny', User::class);
 
         if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
             if (request('search')) {
-                $users = User::where('nama', 'LIKE', '%' . request('search') . '%')->paginate(5);
+                $users = User::where('name', 'LIKE', '%' . request('search') . '%')->paginate(5);
             } else {
                 $users = User::paginate(5);
             }
             return view('superadmin.user.index', compact('users'));
         }
 
-        $users = User::where(['is_public' => 1])->where('nama', 'LIKE', '%' . request('search') . '%')->paginate(5);
-        $belongsTo = auth()->user()->company;
-        return view('admin.user.index', compact('companies', 'belongsTo'));
+        $users = User::where(['company_id' => auth()->user()->company_id])->where('name', 'LIKE', '%' . request('search') . '%')->paginate(5);
+        return view('superadmin.user.index', compact('users'));
     }
 
     /**
@@ -42,11 +41,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        // $this->authorize('create', Company::class);
-        $companies = Company::all();
-        $roles = Role::all();
+        $this->authorize('create', User::class);
 
-        return view('user.create', compact('companies', 'roles'));
+        $companies = auth()->user()->role_id == Role::$IS_SUPERADMIN ? Company::all() : Company::where('id','=', auth()->user()->company_id)->get();
+        $roles = Role::where('id', '>=', auth()->user()->role_id)->get();
+
+        return view('user.create',compact('companies', 'roles'));
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        // $this->authorize('create', Company::class);
+        $this->authorize('create', User::class);
 
         // validate request
         $validated = $request->validated();
@@ -94,7 +94,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // $this->authorize('view', $user);
+        $this->authorize('view', $user);
 
         return view('user.show', compact('user'));
     }
@@ -104,7 +104,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        // $this->authorize('update', $user);
+        $this->authorize('update', $user);
         $companies = Company::all();
         $roles = Role::all();
 
@@ -116,13 +116,13 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        // $this->authorize('update', $user);
+        $this->authorize('update', $user);
         // validate request
         $validated = $request->validated();
 
         $validated['password'] = $validated['password'] ? bcrypt($validated['password']) : $user->password;
         $validated['company_id'] = $validated['role_id'] == Role::$IS_SUPERADMIN ?
-                null : $validated['company_id'];
+            null : $validated['company_id'];
 
         if ($request->img) {
             // delete old picture
@@ -159,7 +159,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        // $this->authorize('delete', $user);
+        $this->authorize('delete', $user);
         $image_path = public_path('/storage/user/' . $user->foto);
         File::exists($image_path) && File::delete($image_path);
         $success = $user->deleteOrFail();
