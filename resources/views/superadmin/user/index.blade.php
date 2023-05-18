@@ -110,9 +110,9 @@
                                         <th scope="row"
                                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                             <img class="w-10 h-10 rounded-full"
-                                                src="storage/user/{{ $user->foto }}" alt="{{ $user->nama }}">
+                                                src="{{ asset("storage/user/$user->foto") }}" alt="{{ $user->name }}">
                                             <div class="pl-3">
-                                                <div class="text-base font-semibold">{{ $user->nama }}
+                                                <div class="text-base font-semibold">{{ $user->name }}
                                                 </div>
                                             </div>
                                         </th>

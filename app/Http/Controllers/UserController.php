@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\TemporaryFile;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -48,9 +50,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request) : RedirectResponse
     {
-        // dd($request);
         // $this->authorize('create', Company::class);
 
         // validate request
@@ -60,18 +61,18 @@ class UserController extends Controller
             $filename = uniqid() . '-' . $tempFile->filename;
 
             // check folder exist or not
-            if (!Storage::exists("app\\public\\company")) {
-                File::makeDirectory(storage_path("app\\public\\company"), $mode = 0777, true, true);
+            if (!Storage::exists("app\\public\\user")) {
+                File::makeDirectory(storage_path("app\\public\\user"), $mode = 0777, true, true);
             }
 
             // Store the image at the specified path.
             File::copy(
                 storage_path("app\\img\\tmp\\$tempFile->folder\\$tempFile->filename"),
-                storage_path("app\\public\\company\\$filename")
+                storage_path("app\\public\\user\\$filename")
             );
 
             // Get the logo file name.
-            $validated['logo'] = $filename;
+            $validated['foto'] = $filename;
             File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
             $tempFile->delete();
 
@@ -89,7 +90,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        // $this->authorize('view', $user);
+
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -113,6 +116,14 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        // $this->authorize('delete', $user);
+        $image_path = public_path('/storage/user/' . $user->foto);
+        File::exists($image_path) && File::delete($image_path);
+        $success = $user->deleteOrFail();
+
+        if ($success)
+            return redirect()->route('user.index')->with('success', 'Data Berhasil Dihapus');
+
+        return redirect()->route('user.index')->with('failed', 'Data ' . $user->nama . ' Gagal Dihapus');
     }
 }
