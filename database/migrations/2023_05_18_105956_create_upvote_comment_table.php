@@ -7,17 +7,21 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * 
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')
-                ->after('id')
+        Schema::create('upvote_comment', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+            $table->foreignId('comment_id')
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->timestamps();
         });
     }
 
@@ -26,8 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('role_id');
-        });
+        Schema::dropIfExists('upvote_comment');
     }
 };

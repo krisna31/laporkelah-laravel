@@ -10,8 +10,13 @@ class Company extends Model
     use HasFactory;
     protected $fillable = ['nama', 'logo', 'is_public'];
 
-    public function user()
+    public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
     }
 }

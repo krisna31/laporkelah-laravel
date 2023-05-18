@@ -2,19 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Company;
-use Database\Factories\CompanyFactory;
+use App\Models\Report;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CompanySeeder extends Seeder
+class ReportSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Company::factory(20)->create();
+        Report::factory(20)->create();
     }
 }

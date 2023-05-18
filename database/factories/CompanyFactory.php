@@ -17,9 +17,9 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama_perusahaan' => fake()->company(),
-            'logo' => fake()->randomElement(),
-            'is_public' => true
+            'nama' => fake()->company(),
+            'logo' => fake()->imageUrl(640, 480, 'company', true),
+            'is_public' => fake()->boolean(),
         ];
     }
 }
