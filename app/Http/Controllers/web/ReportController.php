@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Report;
 use Illuminate\Http\Request;
 
@@ -15,12 +16,11 @@ class ReportController extends Controller
     {
         // $this->authorize('viewAny', Report::class);
 
-        if (request('search'))
-            $reports = Report::where('judul', 'LIKE', '%' . request('search') . '%')->paginate(5);
-        else
-            $reports = Report::paginate(5);
+        // Get all projects.
+        $reports = Report::all();
+        $companies = Company::all();
 
-        return view('superadmin.report.index', compact('reports'));
+        return view('superadmin.report.index', compact('reports', 'companies'));
     }
 
     /**
