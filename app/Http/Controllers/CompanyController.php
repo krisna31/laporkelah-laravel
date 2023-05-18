@@ -113,8 +113,8 @@ class CompanyController extends Controller
 
         if ($request->img) {
             // delete old picture
-            $image_path = 'public/storage/company/' . $company->logo;
-            Storage::exists($image_path) && Storage::delete($image_path);
+            $image_path = public_path('/storage/company/' . $company->logo);
+            File::exists($image_path) && File::delete($image_path);
 
             // create new one
             $tempFile = TemporaryFile::where('folder', $request->img)->first();
@@ -144,6 +144,8 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $this->authorize('delete', $company);
+        $image_path = public_path('/storage/company/' . $company->logo);
+        File::exists($image_path) && File::delete($image_path);
         $success = $company->deleteOrFail();
 
         if ($success)

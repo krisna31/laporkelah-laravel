@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'nama' => "superadmin",
+                'name' => "superadmin",
                 'email' => 'superadmin@gmail.com',
                 'password' => bcrypt('superadmin'),
                 'role_id' => 1,
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 'company_id' => null
             ],
             [
-                'nama' => "admin",
+                'name' => "admin",
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('admin'),
                 'role_id' => 2,
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 'company_id' => 1
             ],
             [
-                'nama' => "user",
+                'name' => "user",
                 'email' => 'user@gmail.com',
                 'password' => bcrypt('user'),
                 'role_id' => 3,
