@@ -10,6 +10,11 @@ class Role extends Model
     use HasFactory;
     public static $IS_SUPERADMIN = 1, $IS_ADMIN = 2, $IS_USER = 3;
 
+    protected $fillable = [
+        'jabatan',
+        'deskripsi',
+    ];
+
     public function user()
     {
         return $this->hasMany(User::class);

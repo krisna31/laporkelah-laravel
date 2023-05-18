@@ -18,17 +18,23 @@ class RoleSeeder extends Seeder
             [
                 'id' => 1,
                 'jabatan' => 'superadmin',
-                'deskripsi' => 'Handle All Companies and Admin until user'
+                'deskripsi' => 'Handle All Companies and Admin until user',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 2,
                 'jabatan' => 'admin',
-                'deskripsi' => 'Handle One Compoany and user belong to same company'
+                'deskripsi' => 'Handle One Compoany and user belong to same company',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 3,
                 'jabatan' => 'user',
-                'deskripsi' => 'User Who Can do the lapor in android app'
+                'deskripsi' => 'User Who Can do the lapor in android app',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

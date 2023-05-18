@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReportRequest extends FormRequest
@@ -11,7 +12,9 @@ class StoreReportRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->id == Role::$IS_SUPERADMIN ||
+            (auth()->user()->id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id) ||
+            (auth()->user()->id == Role::$IS_USER && auth()->user()->company_id == $this->company_id);
     }
 
     /**
@@ -22,7 +25,7 @@ class StoreReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRoleRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdateRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->id == Role::$IS_SUPERADMIN;
     }
 
     /**
@@ -22,7 +23,8 @@ class UpdateRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'jabatan' => 'required|string|max:255|unique:roles,jabatan,' . $this->role->id,
+            'deskripsi' => 'required|string|max:255',
         ];
     }
 }

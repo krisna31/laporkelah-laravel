@@ -11,17 +11,21 @@ class RolePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        //
+        return $user->role_id == Role::$IS_SUPERADMIN
+            ? Response::allow()
+            : Response::deny('You are not authorized to view roles.');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Role $role): bool
+    public function view(User $user, Role $role): Response
     {
-        //
+        return $user->role_id == Role::$IS_SUPERADMIN
+            ? Response::allow()
+            : Response::deny('You are not authorized to view roles.');
     }
 
     /**
@@ -29,7 +33,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role_id == Role::$IS_SUPERADMIN;
     }
 
     /**
@@ -37,7 +41,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        //
+        return $user->role_id == Role::$IS_SUPERADMIN;
     }
 
     /**
@@ -45,7 +49,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        //
+        return $user->role_id == Role::$IS_SUPERADMIN;
     }
 
     /**
@@ -53,7 +57,7 @@ class RolePolicy
      */
     public function restore(User $user, Role $role): bool
     {
-        //
+        return $user->role_id == Role::$IS_SUPERADMIN;
     }
 
     /**
@@ -61,6 +65,6 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role): bool
     {
-        //
+        return $user->role_id == Role::$IS_SUPERADMIN;
     }
 }

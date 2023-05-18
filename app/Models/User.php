@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function upvoteReports()
+    {
+        return $this->belongsToMany(Report::class, 'upvote_report', 'user_id', 'report_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
