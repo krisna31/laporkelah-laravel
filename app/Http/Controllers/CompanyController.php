@@ -98,7 +98,6 @@ class CompanyController extends Controller
     {
         $this->authorize('update', $company);
 
-
         return view('company.edit', compact('company'));
     }
 

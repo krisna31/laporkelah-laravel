@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateRoleRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\TemporaryFile;
@@ -50,7 +52,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request) : RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         // $this->authorize('create', Company::class);
 
@@ -76,6 +78,8 @@ class UserController extends Controller
             File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
             $tempFile->delete();
 
+            $validated['password'] = $validated['password'] ? bcrypt($validated['password']) : bcrypt('password');
+
             // Create a project with the validated data.
             User::create($validated);
             // Redirect the user to the project list.
@@ -100,15 +104,54 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        // $this->authorize('update', $user);
+        $companies = Company::all();
+        $roles = Role::all();
+
+        return view('user.edit', compact('user', 'companies', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        // $this->authorize('update', $user);
+        // validate request
+        $validated = $request->validated();
+
+        $validated['password'] = $validated['password'] ? bcrypt($validated['password']) : $user->password;
+        $validated['company_id'] = $validated['role_id'] == Role::$IS_SUPERADMIN ?
+                null : $validated['company_id'];
+
+        if ($request->img) {
+            // delete old picture
+            $image_path = public_path('/storage/user/' . $user->foto);
+            File::exists($image_path) && File::delete($image_path);
+
+            // create new one
+            $tempFile = TemporaryFile::where('folder', $request->img)->first();
+            if ($tempFile) {
+                $filename = uniqid() . '-' . $tempFile->filename;
+                FIle::copy(
+                    storage_path("app\\img\\tmp\\$tempFile->folder\\$tempFile->filename"),
+                    storage_path("app\\public\\user\\$filename")
+                );
+                File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
+                $tempFile->delete();
+            }
+            $validated['foto'] = $filename;
+            $user->update($validated);
+        } else
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'role_id' => $validated['role_id'],
+                'company_id' => $validated['company_id'],
+                'password' => $validated['password'],
+            ]);
+
+        return redirect()->route('user.index')->with('success', 'Data ' . $user->name . ' Berhasil Diubah');
     }
 
     /**
