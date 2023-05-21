@@ -25,7 +25,12 @@ class StoreReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'user_id' => 'required|exists:users,id',
+            'company_id' => 'required|exists:companies,id',
+            'title' => 'required|string',
+            'keterangan' => 'required|string|max:1000',
+            'status' => 'required|boolean',
+            'foto' => 'string',
         ];
     }
 }

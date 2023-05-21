@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReportRequest;
 use App\Models\Company;
 use App\Models\Report;
+use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
@@ -28,33 +32,48 @@ class ReportController extends Controller
     public function create()
     {
         // $this->authorize('create', Report::class);
-        return view('superadmin.report.create');
+        $companies = Company::all();
+
+        return view('superadmin.report.create', compact('companies'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreReportRequest $request)
     {
         // $this->authorize('create', Report::class);
 
         // validate request
-        $validated = $request->validate([
-            'judul' => 'required',
-            'deskripsi' => 'required',
-            'lokasi' => 'required',
-            'foto' => 'required',
-            'kategori' => 'required',
-        ]);
+        $validated = $request->validated();
+        $tempFile = TemporaryFile::where('folder', $request->img)->first();
+        if ($tempFile) {
+            $filename = uniqid() . '-' . $tempFile->filename;
 
-        // Create a project with the validated data.
-        $isSuccess = Report::create($validated);
+            // check folder exist or not
+            if (!Storage::exists("app\\public\\report")) {
+                File::makeDirectory(storage_path("app\\public\\report"), $mode = 0777, true, true);
+            }
 
-        // Redirect the user to index page with a success notification or failed notification.
-        return $isSuccess ?
-            redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Dibuat")
-            :
-            redirect()->route('report.index')->with('failed', "Data report $request->judul Gagal Dibuat");
+            // Store the image at the specified path.
+            File::copy(
+                storage_path("app\\img\\tmp\\$tempFile->folder\\$tempFile->filename"),
+                storage_path("app\\public\\report\\$filename")
+            );
+
+            // Get the foto file name.
+            $validated['foto'] = $filename;
+            File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
+            $tempFile->delete();
+
+            // Create a project with the validated data.
+            Report::create($validated);
+            return redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Dibuat");
+        }
+
+
+        // Redirect the user to index page with a failed notification.
+        return redirect()->route('report.index')->with('failed', "Data report $request->judul Gagal Dibuat");
     }
 
     /**

@@ -112,11 +112,11 @@
                                                         <a href="#"
                                                             class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
                                                             <img class="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
-                                                                src="{{ asset('storage/' . $report->foto) }}"
+                                                                src="{{ asset('storage/report/' . $report->foto) }}"
                                                                 alt="{{ $report->title }}" />
                                                             <div class="text-gray-600 dark:text-gray-400">
                                                                 <div class="text-base font-bold">
-                                                                    {{ $report->title }}
+                                                                    {{ $report->title . '  |  ' . $report->created_at->diffForHumans() }}
                                                                 </div>
                                                                 <div
                                                                     class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
@@ -124,6 +124,23 @@
                                                                 </div>
                                                                 <div class="text-sm font-normal">
                                                                     {!! Str::limit($report->keterangan, 100, '...') !!}
+                                                                </div>
+                                                                <div class="text-sm font-normal">
+                                                                    @if ($report->status)
+                                                                        <span
+                                                                            class="flex items-center text-sm font-medium text-gray-900 dark:text-white"><span
+                                                                                class="flex w-2.5 h-2.5 bg-green-600 rounded-full mr-1.5 flex-shrink-0">
+                                                                            </span>
+                                                                            Open
+                                                                        </span>
+                                                                    @else
+                                                                        <span
+                                                                            class="flex items-center text-sm font-medium text-gray-900 dark:text-white"><span
+                                                                                class="flex w-2.5 h-2.5 bg-red-600 rounded-full mr-1.5 flex-shrink-0">
+                                                                            </span>
+                                                                            Close
+                                                                        </span>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </a>
