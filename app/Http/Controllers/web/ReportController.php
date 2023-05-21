@@ -17,10 +17,9 @@ class ReportController extends Controller
         // $this->authorize('viewAny', Report::class);
 
         // Get all projects.
-        $reports = Report::all();
-        $companies = Company::all();
+        $companies = Company::with('reports')->get();
 
-        return view('superadmin.report.index', compact('reports', 'companies'));
+        return view('superadmin.report.index', compact('companies'));
     }
 
     /**
