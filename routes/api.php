@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\Api\AuthenticationController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,10 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::prefix('/auth/')->group(function () {
+    Route::post('/login', [AuthenticationController::class, 'login']);
+    Route::post('/register', [AuthenticationController::class, 'register']);
 });
 
-Route::apiResources([
-    'users' => UserController::class
-]);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResources([
+        'company' => CompanyController::class,
+        'report' => ReportController::class,
+        'comment' => CommentController::class,
+    ]);
+});

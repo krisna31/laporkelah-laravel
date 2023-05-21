@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\web\CommentController;
-use App\Http\Controllers\web\ReportController;
-use App\Http\Controllers\web\RoleController;
-use App\Http\Controllers\web\ProfileController;
-use App\Http\Controllers\web\UploadController;
-use App\Http\Controllers\web\UserController;
-use App\Http\Controllers\web\CompanyController as WebCompanyController;
+use App\Http\Controllers\Web\CommentController;
+use App\Http\Controllers\Web\ReportController;
+use App\Http\Controllers\Web\RoleController;
+use App\Http\Controllers\Web\ProfileController;
+use App\Http\Controllers\Web\UploadController;
+use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\CompanyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified', 'can:isAdmin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::resource('company', WebCompanyController::class);
+    Route::resource('company', CompanyController::class);
     Route::resource('user', UserController::class);
     Route::resource('role', RoleController::class);
     Route::resource('report', ReportController::class);

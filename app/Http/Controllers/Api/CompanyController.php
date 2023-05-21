@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Resources\CompanyResource;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return User::all();
+        return CompanyResource::collection(Company::all());
     }
 
     /**
@@ -27,7 +28,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Company $company)
     {
         //
     }
@@ -35,7 +36,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Company $company)
     {
         //
     }
@@ -43,7 +44,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Company $company)
     {
         //
     }
