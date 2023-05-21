@@ -14,7 +14,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -22,7 +22,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -47,32 +47,38 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Comment $comment)
     {
-        //
+        return abort(404);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Comment $comment)
     {
-        //
+        return view('superadmin.comment.edit', compact('comment'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreCommentRequest $request, Comment $comment)
     {
-        //
+        // update the comment
+        $comment = $comment->update($request->validated());
+
+        // return response to frontend if fail or success with flash message
+        if (!$comment) return redirect()->back()->with('error', 'Komentar gagal diubah');
+
+        return redirect()->back()->with('success', 'Komentar berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
-        //
+        return $comment->deleteOrFail() ? redirect()->back()->with('success', 'Komentar berhasil dihapus') : redirect()->back()->with('error', 'Komentar gagal dihapus');
     }
 }
