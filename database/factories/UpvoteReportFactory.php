@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Report;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class UpvoteReportFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'report_id' => Report::all()->random()->id,
+            'user_id' => User::all()->random()->id,
         ];
     }
 }

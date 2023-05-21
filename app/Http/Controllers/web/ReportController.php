@@ -103,15 +103,38 @@ class ReportController extends Controller
 
         // validate request
         $validated = $request->validated();
+        $tempFile = TemporaryFile::where('folder', $request->img)->first();
+        if ($tempFile) {
+            $filename = uniqid() . '-' . $tempFile->filename;
 
-        // Update the project with the validated data.
-        $isSuccess = $report->update($validated);
+            // delete old picture
+            $image_path = public_path('/storage/report/' . $report->foto);
+            File::exists($image_path) && File::delete($image_path);
 
-        // Redirect the user to index page with a success notification or failed notification.
-        return $isSuccess ?
-            redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Diubah")
-            :
-            redirect()->route('report.index')->with('failed', "Data report $request->judul Gagal Diubah");
+            // check folder exist or not
+            if (!Storage::exists("app\\public\\report")) {
+                File::makeDirectory(storage_path("app\\public\\report"), $mode = 0777, true, true);
+            }
+
+            // Store the image at the specified path.
+            File::copy(
+                storage_path("app\\img\\tmp\\$tempFile->folder\\$tempFile->filename"),
+                storage_path("app\\public\\report\\$filename")
+            );
+
+            // Get the foto file name.
+            $validated['foto'] = $filename;
+            File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
+            $tempFile->delete();
+
+            // Create a project with the validated data.
+            $isSuccess = $report->updateOrFail($validated);
+            return $isSuccess && redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Diubah");
+        }
+
+
+        // Redirect the user to index page with a failed notification.
+        return redirect()->route('report.index')->with('failed', "Data report $request->judul Gagal Diubah");
     }
 
     /**

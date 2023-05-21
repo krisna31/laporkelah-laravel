@@ -109,10 +109,10 @@
                                             <ol class="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
                                                 @forelse ($company->reports as $report)
                                                     <li>
-                                                        <a href="#"
+                                                        <a href="{{ route('report.show', $report) }}"
                                                             class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
                                                             <img class="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
-                                                                src="{{ asset('storage/report/' . $report->foto) }}"
+                                                                src="{{ file_exists(asset('storage/report/' . $report->foto)) ? asset('storage/report/' . $report->foto) : asset('logo.jpg') }}"
                                                                 alt="{{ $report->title }}" />
                                                             <div class="text-gray-600 dark:text-gray-400">
                                                                 <div class="text-base font-bold">

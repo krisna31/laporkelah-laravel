@@ -21,7 +21,7 @@ class CommentFactory extends Factory
         return [
             'report_id' => Report::all()->random()->id,
             'user_id' => User::all()->random()->id,
-            'isi' => fake()->randomHtml(),
+            'isi' => fake()->sentence(random_int(8, 30)),
         ];
     }
 }

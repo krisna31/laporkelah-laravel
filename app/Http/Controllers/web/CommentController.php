@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCommentRequest;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -26,9 +28,20 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCommentRequest $request)
     {
-        //
+        // validate request
+        $validated = $request->validated();
+
+        // store the comment
+        $comment = Comment::create($validated);
+
+        // return response to frontend if fail or success with flash message
+        if ($comment) {
+            return redirect()->back()->with('success', 'Komentar berhasil ditambahkan');
+        } else {
+            return redirect()->back()->with('error', 'Komentar gagal ditambahkan');
+        }
     }
 
     /**

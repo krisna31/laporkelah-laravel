@@ -16,6 +16,11 @@ class Report extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
