@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Report;
 use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,9 +13,10 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        $company = Report::find($this->report_id)->company;
         return auth()->user()->id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id) ||
-            (auth()->user()->id == Role::$IS_USER && auth()->user()->company_id == $this->company_id);
+            (auth()->user()->id == Role::$IS_ADMIN && (auth()->user()->company_id == $company->id || $company->is_public)) ||
+            (auth()->user()->id == Role::$IS_USER && (auth()->user()->company_id == $company->id || $company->is_public));
     }
 
     /**

@@ -30,6 +30,8 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
+        $this->authorize('create', Comment::class);
+
         // validate request
         $validated = $request->validated();
 
@@ -57,6 +59,8 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
+        $this->authorize('update', $comment);
+
         return view('superadmin.comment.edit', compact('comment'));
     }
 
@@ -65,6 +69,8 @@ class CommentController extends Controller
      */
     public function update(StoreCommentRequest $request, Comment $comment)
     {
+        $this->authorize('update', $comment);
+
         // update the comment
         $comment = $comment->update($request->validated());
 
@@ -79,6 +85,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        $this->authorize('delete', $comment);
+
         return $comment->deleteOrFail() ? redirect()->back()->with('success', 'Komentar berhasil dihapus') : redirect()->back()->with('error', 'Komentar gagal dihapus');
     }
 }

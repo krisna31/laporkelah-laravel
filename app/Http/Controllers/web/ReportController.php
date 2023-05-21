@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReportRequest;
 use App\Models\Company;
 use App\Models\Report;
+use App\Models\Role;
 use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -18,11 +19,18 @@ class ReportController extends Controller
      */
     public function index()
     {
-        // $this->authorize('viewAny', Report::class);
+        $this->authorize('viewAny', Report::class);
 
-        // Get all projects.
-        $companies = Company::with('reports')->get();
-
+        if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
+            // Get all projects.
+            $companies = Company::with('reports')->get();
+        } else {
+            // Get the projects that belong to the user.
+            $companies = Company::with('reports')->where(function ($query) {
+                $query->where('is_public', 1)
+                    ->orWhere('id', auth()->user()->company_id);
+            })->get();
+        }
         return view('superadmin.report.index', compact('companies'));
     }
 
@@ -31,8 +39,18 @@ class ReportController extends Controller
      */
     public function create()
     {
-        // $this->authorize('create', Report::class);
-        $companies = Company::all();
+        $this->authorize('create', Report::class);
+
+        if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
+            // Get all projects.
+            $companies = Company::all();
+        } else {
+            // Get the projects that belong to the user.
+            $companies = Company::where(function ($query) {
+                $query->where('is_public', 1)
+                    ->orWhere('id', auth()->user()->company_id);
+            })->get();
+        }
 
         return view('superadmin.report.create', compact('companies'));
     }
@@ -42,7 +60,7 @@ class ReportController extends Controller
      */
     public function store(StoreReportRequest $request)
     {
-        // $this->authorize('create', Report::class);
+        $this->authorize('create', Report::class);
 
         // validate request
         $validated = $request->validated();
@@ -81,7 +99,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        // $this->authorize('view', $report);
+        $this->authorize('view', $report);
         return view('superadmin.report.show', compact('report'));
     }
 
@@ -90,16 +108,17 @@ class ReportController extends Controller
      */
     public function edit(Report $report)
     {
-        // $this->authorize('update', $report);
-        return view('superadmin.report.edit', compact('report'));
+        $this->authorize('update', $report);
+        $companies = Company::all();
+        return view('superadmin.report.edit', compact('report', 'companies'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Report $report)
+    public function update(StoreReportRequest $request, Report $report)
     {
-        // $this->authorize('update', $report);
+        $this->authorize('update', $report);
 
         // validate request
         $validated = $request->validated();
@@ -126,12 +145,11 @@ class ReportController extends Controller
             $validated['foto'] = $filename;
             File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
             $tempFile->delete();
-
-            // Create a project with the validated data.
-            $isSuccess = $report->updateOrFail($validated);
-            return $isSuccess && redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Diubah");
         }
 
+        // Create a project with the validated data.
+        $isSuccess = $report->updateOrFail($validated);
+        if ($isSuccess) return redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Diubah");
 
         // Redirect the user to index page with a failed notification.
         return redirect()->route('report.index')->with('failed', "Data report $request->judul Gagal Diubah");
@@ -142,7 +160,7 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        // $this->authorize('delete', $report);
+        $this->authorize('delete', $report);
 
         // Delete the project.
         $isSuccess = $report->deleteOrFail();
