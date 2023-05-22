@@ -14,7 +14,7 @@ class ReportPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN]);
+        return in_array($user->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN]);
     }
 
     /**
@@ -22,8 +22,8 @@ class ReportPolicy
      */
     public function view(User $user, Report $report): bool
     {
-        return $user->id == Role::$IS_SUPERADMIN ||
-            ($user->id == Role::$IS_ADMIN && ($user->company_id == $report->company_id || $report->company->is_public));
+        return $user->role_id == Role::$IS_SUPERADMIN ||
+            ($user->role_id == Role::$IS_ADMIN && ($user->company_id == $report->company_id || $report->company->is_public));
     }
 
     /**
@@ -31,7 +31,7 @@ class ReportPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN]);
+        return in_array($user->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN]);
     }
 
     /**
@@ -39,8 +39,8 @@ class ReportPolicy
      */
     public function update(User $user, Report $report): bool
     {
-        return $user->id == Role::$IS_SUPERADMIN ||
-            ($user->id == Role::$IS_ADMIN && $user->company_id == $report->company_id);
+        return $user->role_id == Role::$IS_SUPERADMIN ||
+            ($user->role_id == Role::$IS_ADMIN && $user->company_id == $report->company_id);
     }
 
     /**
@@ -48,8 +48,8 @@ class ReportPolicy
      */
     public function delete(User $user, Report $report): bool
     {
-        return $user->id == Role::$IS_SUPERADMIN ||
-            ($user->id == Role::$IS_ADMIN && $user->company_id == $report->company_id);
+        return $user->role_id == Role::$IS_SUPERADMIN ||
+            ($user->role_id == Role::$IS_ADMIN && $user->company_id == $report->company_id);
     }
 
     /**
