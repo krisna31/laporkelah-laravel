@@ -28,9 +28,8 @@ class CompanyController extends Controller
             return view('superadmin.company.index', compact('companies'));
         }
 
-        $companies = Company::where(['is_public' => 1])->where('nama', 'LIKE', '%' . request('search') . '%')->paginate(5);
         $belongsTo = auth()->user()->company;
-        return view('admin.company.index', compact('companies', 'belongsTo'));
+        return view('admin.company.index', compact('belongsTo'));
     }
 
     /**
