@@ -47,8 +47,8 @@ class ReportController extends Controller
         } else {
             // Get the projects that belong to the user.
             $companies = Company::where(function ($query) {
-                $query->where('is_public', 1)
-                    ->orWhere('id', auth()->user()->company_id);
+                $query->where('id', auth()->user()->company_id)
+                    ->orWhere('is_public', 1);
             })->get();
         }
 

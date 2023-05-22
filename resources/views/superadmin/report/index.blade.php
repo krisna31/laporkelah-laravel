@@ -76,7 +76,23 @@
                                         class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                                         data-accordion-target="#accordion-open-body-{{ $loop->index }}"
                                         aria-expanded="false" aria-controls="accordion-open-body-{{ $loop->index }}">
-                                        <span class="text-gray-900 dark:text-gray-100">{{ $company->nama }}</span>
+                                        <span class="text-gray-900 dark:text-gray-100">{{ $company->nama }}
+                                            @if ($company->is_public)
+                                                <span
+                                                    class="flex items-center text-sm font-medium text-gray-900 dark:text-white"><span
+                                                        class="flex w-2.5 h-2.5 bg-green-600 rounded-full mr-1.5 flex-shrink-0">
+                                                    </span>
+                                                    Public
+                                                </span>
+                                            @else
+                                                <span
+                                                    class="flex items-center text-sm font-medium text-gray-900 dark:text-white"><span
+                                                        class="flex w-2.5 h-2.5 bg-red-600 rounded-full mr-1.5 flex-shrink-0">
+                                                    </span>
+                                                    Private
+                                                </span>
+                                            @endif
+                                        </span>
                                         <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor"
                                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"

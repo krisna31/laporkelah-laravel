@@ -16,9 +16,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $companies = Company::with('reports')->where(function ($query) {
-            $query->where('is_public', 1)
-                ->orWhere('id', auth()->user()->company_id);
+        $companies = Company::where(function ($query) {
+                $query->where('id', auth()->user()->company_id)
+                    ->orWhere('is_public', 1);
         })->get();
 
         return $companies;
