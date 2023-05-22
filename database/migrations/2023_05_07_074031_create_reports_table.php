@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('title');
             $table->text('keterangan');
             $table->boolean('status');
+            $table->text('alasan_close')->nullable();
             $table->text('foto')->unique();
             $table->timestamps();
         });

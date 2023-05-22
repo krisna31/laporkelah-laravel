@@ -24,7 +24,7 @@ class ReportFactory extends Factory
             'title' => fake()->realText(random_int(10, 25)),
             'keterangan' => fake()->sentence(random_int(5, 30)),
             'status' => fake()->boolean(),
-            'foto' => fake()->word(),
+            'foto' => fake()->uuid(),
         ];
     }
 }

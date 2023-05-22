@@ -18,7 +18,7 @@ class CompanyFactory extends Factory
     {
         return [
             'nama' => fake()->company(),
-            'logo' => fake()->word(),
+            'logo' => fake()->uuid(),
             'is_public' => fake()->boolean(),
         ];
     }
