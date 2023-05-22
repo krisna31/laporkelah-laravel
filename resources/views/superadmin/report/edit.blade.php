@@ -12,6 +12,7 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="user_id" value="{{ $report->user_id }}">
+                        <input type="hidden" name="updated_by" value="{{ auth()->user()->id }}">
 
                         <!-- title -->
                         <div>
@@ -37,6 +38,7 @@
                             </div>
                             <x-input-error :messages="$errors->get('title')" />
                         </div>
+
 
                         <!-- foto -->
                         <div class="mt-4">
@@ -91,6 +93,19 @@
                             <x-input-error :messages="$errors->get('status')" />
                         </div>
 
+                        <!-- alasan_close -->
+                        <div id="alasan_close" class="d-none">
+                            <div class="relative z-0 w-full mb-6 group">
+                                <label for="alasan_close"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alasan
+                                    Close</label>
+                                <textarea id="alasan_close" rows="4" name="alasan_close"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Tulis alasan_close Laporan">{{ $report->alasan_close ? $report->alasan_close : old('alasan_close') }}</textarea>
+                            </div>
+                            <x-input-error :messages="$errors->get('alasan_close')" />
+                        </div>
+
                         <div class="flex items-center justify-end mt-4">
                             <x-primary-button class="ml-4">
                                 {{ __('Update Report') }}
@@ -119,6 +134,11 @@
                     }
                 }
             })
+
+            // NOT DONE YET
+            if(document.getElementById('close-option').checked) {
+                document.getElementById('alasan_close').display = "block"
+            }
         </script>
     @endsection
 </x-app-layout>

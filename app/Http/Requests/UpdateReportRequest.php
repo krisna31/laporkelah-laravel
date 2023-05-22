@@ -11,7 +11,9 @@ class UpdateReportRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->id == Role::$IS_SUPERADMIN ||
+            (auth()->user()->id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id) ||
+            (auth()->user()->id == Role::$IS_USER && auth()->user()->company_id == $this->company_id);
     }
 
     /**
@@ -22,7 +24,14 @@ class UpdateReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'company_id' => 'required|exists:companies,id',
+            'title' => 'required|string',
+            'keterangan' => 'required|string|max:1000',
+            'updated_by' => 'required',
+            'status' => 'required|boolean',
+            'alasan_close' => 'required_if:status,0|string|max:1000',
+            'foto' => 'string',
         ];
     }
 }
