@@ -94,7 +94,7 @@
                         </div>
 
                         <!-- alasan_close -->
-                        <div id="alasan_close" class="d-none">
+                        <div id="alasan_close" class="hidden">
                             <div class="relative z-0 w-full mb-6 group">
                                 <label for="alasan_close"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alasan
@@ -103,7 +103,11 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Tulis alasan_close Laporan">{{ $report->alasan_close ? $report->alasan_close : old('alasan_close') }}</textarea>
                             </div>
-                            <x-input-error :messages="$errors->get('alasan_close')" />
+                            {{-- <x-input-error :messages="$errors->get('alasan_close')" /> --}}
+                            @error('alasan_close')
+                                <div class="text-sm text-red-600 dark:text-red-400 space-y-1">Alasan close field is required
+                                    when status is close</div>
+                            @enderror
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
@@ -135,10 +139,17 @@
                 }
             })
 
-            // NOT DONE YET
-            if(document.getElementById('close-option').checked) {
-                document.getElementById('alasan_close').display = "block"
+            if(document.getElementById('close-option').checked) document.querySelector('#alasan_close').classList.remove('hidden')
+            if(document.getElementById('open-option').checked) document.querySelector('#alasan_close').classList.add('hidden')
+
+             function myfunction(event) {
+                if (event.target.id === 'close-option') document.querySelector('#alasan_close').classList.remove('hidden')
+                else document.querySelector('#alasan_close').classList.add('hidden')
             }
+
+                document.querySelectorAll("input[name='status']").forEach((input) => {
+                    input.addEventListener('change', myfunction);
+            });
         </script>
     @endsection
 </x-app-layout>

@@ -21,6 +21,13 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+            $table->unsignedBigInteger('updated_by')
+                ->nullable();
+            $table->foreign('updated_by')
+                ->on('users')
+                ->references('id')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->text('isi');
             $table->timestamps();
         });

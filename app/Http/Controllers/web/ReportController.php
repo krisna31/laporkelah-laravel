@@ -149,7 +149,8 @@ class ReportController extends Controller
 
         // Create a project with the validated data.
         $isSuccess = $report->updateOrFail($validated);
-        if ($isSuccess) return redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Diubah");
+        if ($isSuccess)
+            return redirect()->route('report.index')->with('success', "Data report $request->judul Berhasil Diubah");
 
         // Redirect the user to index page with a failed notification.
         return redirect()->route('report.index')->with('failed', "Data report $request->judul Gagal Diubah");
