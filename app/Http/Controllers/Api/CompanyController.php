@@ -14,7 +14,12 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return CompanyResource::collection(Company::all());
+        $companies = Company::where(function ($query) {
+            $query->where('id', auth()->user()->company_id)
+                ->orWhere('is_public', 1);
+        })->get();
+
+        return CompanyResource::collection($companies);
     }
 
     /**
