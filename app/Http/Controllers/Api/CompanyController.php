@@ -14,10 +14,11 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        // get the report too from relationshiop in company model
         $companies = Company::where(function ($query) {
             $query->where('id', auth()->user()->company_id)
                 ->orWhere('is_public', 1);
-        })->get();
+        })->with('reports')->get();
 
         return CompanyResource::collection($companies);
     }
@@ -27,7 +28,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -35,7 +36,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return new CompanyResource($company);
     }
 
     /**
@@ -43,7 +44,7 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -51,6 +52,6 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        return abort(404);
     }
 }

@@ -16,15 +16,14 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $companies = Company::where(function ($query) {
-            $query->where('id', auth()->user()->company_id)
-                ->orWhere('is_public', 1);
+        $reports = Report::where(function ($query) {
+            $query->where('company_id', auth()->user()->company_id)
+                ->orWhereHas('company', function ($query) {
+                    $query->where('is_public', 1);
+                });
         })->get();
 
-        // get data report for each company
-        // foreach
-
-        // return CompanyResource::collection($companies);
+        return ReportResource::collection($reports);
     }
 
     /**
@@ -47,7 +46,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        //
+        return new ReportResource($report);
     }
 
     /**

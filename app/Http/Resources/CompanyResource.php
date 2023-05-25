@@ -19,6 +19,7 @@ class CompanyResource extends JsonResource
             "nama_perusahaan" => $this->nama,
             "logo_perusahaan" => $this->logo,
             "is_public" => $this->is_public,
+            'reports' => ReportResource::collection($this->reports),
         ];
     }
 }
