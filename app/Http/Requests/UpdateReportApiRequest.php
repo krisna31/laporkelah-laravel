@@ -5,16 +5,14 @@ namespace App\Http\Requests;
 use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReportRequest extends FormRequest
+class UpdateReportApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user()->id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id && auth()->user()->id == request()->user_id) ||
-            (auth()->user()->id == Role::$IS_USER && auth()->user()->company_id == $this->company_id && auth()->user()->id == request()->user_id);
+        return in_array(auth()->user()->id , [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
     }
 
     /**
@@ -31,7 +29,7 @@ class StoreReportRequest extends FormRequest
             'keterangan' => 'required|string|max:1000',
             'status' => 'required|boolean',
             'alasan_close' => 'required_if:status,0',
-            'foto' => 'string',
+            'foto' => 'required|image|file',
         ];
     }
 }

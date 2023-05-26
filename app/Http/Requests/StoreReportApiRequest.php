@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReportRequest extends FormRequest
+class StoreReportApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,7 @@ class StoreReportRequest extends FormRequest
             'keterangan' => 'required|string|max:1000',
             'status' => 'required|boolean',
             'alasan_close' => 'required_if:status,0',
-            'foto' => 'string',
+            'foto' => 'required|image|file',
         ];
     }
 }

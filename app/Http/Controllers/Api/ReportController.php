@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReportApiRequest;
+use App\Http\Requests\UpdateReportApiRequest;
 use App\Http\Resources\ReportResource;
-use App\Models\Company;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -16,6 +17,7 @@ class ReportController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Report::class);
         $reports = Report::where(function ($query) {
             $query->where('company_id', auth()->user()->company_id)
                 ->orWhereHas('company', function ($query) {
@@ -29,11 +31,19 @@ class ReportController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreReportApiRequest $request)
     {
+        $this->authorize('create', Report::class);
         try {
-            $report = new Report;
-            $report->fill($request->validated())->save();
+            $validated = $request->validated();
+            $file = $request->file('foto');
+            $folder = "public\\report";
+            $filename = uniqid() . '-' . $file->getClientOriginalName();
+            $file->storeAs($folder, $filename);
+
+            $validated['foto'] = $filename;
+
+            $report = Report::create($validated);
 
             return new ReportResource($report);
         } catch (\Exception $exception) {
@@ -46,15 +56,31 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
+        $this->authorize('view', $report);
         return new ReportResource($report);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Report $report)
+    public function update(UpdateReportApiRequest $request, Report $report)
     {
-        //
+        // $this->authorize('update', $report);
+        try {
+            $validated = $request->validated();
+            $file = $request->file('foto');
+            $folder = "public\\report";
+            $filename = uniqid() . '-' . $file->getClientOriginalName();
+            $file->storeAs($folder, $filename);
+
+            $validated['foto'] = $filename;
+
+            $report = Report::create($validated);
+
+            return new ReportResource($report);
+        } catch (\Exception $exception) {
+            throw new HttpException(400, "Invalid data - {$exception->getMessage()}");
+        }
     }
 
     /**
