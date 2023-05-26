@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class CompanyController extends Controller
 {
@@ -14,11 +15,21 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        // get the report too from relationshiop in company model
-        $companies = Company::where(function ($query) {
-            $query->where('id', auth()->user()->company_id)
-                ->orWhere('is_public', 1);
-        })->with('reports')->get();
+        $withReports = request()->reports;
+
+        if ($withReports) {
+            // get the report too from relationshiop in company model
+            $companies = Company::where(function ($query) {
+                $query->where('id', auth()->user()->company_id)
+                    ->orWhere('is_public', 1);
+            })->with('reports')->get();
+        } else {
+            // get the report too from relationshiop in company model
+            $companies = Company::where(function ($query) {
+                $query->where('id', auth()->user()->company_id)
+                    ->orWhere('is_public', 1);
+            })->get();
+        }
 
         return CompanyResource::collection($companies);
     }
@@ -36,6 +47,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
+        $this->authorize('view', Company::class);
         return new CompanyResource($company);
     }
 
