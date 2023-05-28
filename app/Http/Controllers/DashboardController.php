@@ -23,14 +23,18 @@ class DashboardController extends Controller
 
         $data = collect([]); // Could also be an array
 
-        for ($days_backwards = 2; $days_backwards >= 0; $days_backwards--) {
-            // Could also be an array_push if using an array rather than a collection.
-            $data->push(User::whereDate('created_at', today()->subDays($days_backwards))->count());
+        $uniqueYearUser = User::selectRaw('YEAR(created_at) year')
+            ->orderBy('year')
+            ->distinct()
+            ->pluck('year');
+
+        foreach ($uniqueYearUser as $key => $value) {
+            $data->push(User::whereYear('created_at', $value)->count());
         }
 
         $chart = new UserChart;
-        $chart->labels(['2 days ago', 'Yesterday', 'Today']);
-        $chart->dataset('My dataset', 'line', $data);
+        $chart->labels($uniqueYearUser);
+        $chart->dataset('Total User Register', 'line', $data);
 
         return view('dashboard', compact('users', 'roles', 'companies', 'reports', 'chart'));
     }

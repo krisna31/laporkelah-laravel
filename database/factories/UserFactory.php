@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'role_id' => random_int(2, 3),
             'foto' => fake()->uuid(),
             'company_id' => Company::all()->random()->id,
-            // 'created_at' => fake()->dateTimeBetween('-5 years', 'now'),
+            'created_at' => fake()->dateTimeBetween('-3 years', 'now'),
         ];
     }
 
