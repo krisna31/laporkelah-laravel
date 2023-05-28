@@ -1,0 +1,1124 @@
+{
+	"info": {
+		"_postman_id": "e738b780-2e84-4d09-9754-562dad00971b",
+		"name": "Mobile Api Lapor Umum",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23868327"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Login With nothing just url",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "superadmin@gmail.com",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "superadmin",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "device_name",
+											"value": "android",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-path}}/auth/login",
+									"host": [
+										"{{base-path}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login With accept app/json",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "superadmin@gmail.com",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "superadmin",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "device_name",
+											"value": "android",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-path}}/auth/login",
+									"host": [
+										"{{base-path}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Wrong password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "superadmin@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "wrong password",
+											"type": "text"
+										},
+										{
+											"key": "device_name",
+											"value": "android",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-path}}/auth/login",
+									"host": [
+										"{{base-path}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Correct",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"postman.setEnvironmentVariable(\"token\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "superadmin@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "superadmin",
+											"type": "text"
+										},
+										{
+											"key": "device_name",
+											"value": "android",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-path}}/auth/login",
+									"host": [
+										"{{base-path}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Correct User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"postman.setEnvironmentVariable(\"token\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "user@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "user",
+											"type": "text"
+										},
+										{
+											"key": "device_name",
+											"value": "android",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-path}}/auth/login",
+									"host": [
+										"{{base-path}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base-path}}/auth/logout",
+									"host": [
+										"{{base-path}}"
+									],
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Register",
+					"item": [
+						{
+							"name": "Register Correct",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"postman.setEnvironmentVariable(\"token\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "krisna31",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "newEmail@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "device_name",
+											"value": "android",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-path}}auth/register",
+									"host": [
+										"{{base-path}}auth"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get His own data user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/user",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "Get all company without token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/company",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all company with token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/company",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get company with id company",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/company/2",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"company",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Get All Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/report",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All with coments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/report?comments=1",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report"
+							],
+							"query": [
+								{
+									"key": "comments",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Spesific Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/report/1",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store a Report",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resBody = JSON.parse(responseBody)\r",
+									"pm.environment.set('created_report_id', resBody.id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "lorem",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "lorem ipsum dolor comet",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "Screenshot (1).png"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/report",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Report status 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "lorem",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "lorem ipsum dolor comet",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "Screenshot (2).png"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/report/{{created_report_id}}",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report",
+								"{{created_report_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Report status 0",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "lorem",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "lorem ipsum dolor comet",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "Screenshot (2).png"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "alasan_close",
+									"value": "iseng",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/report/{{created_report_id}}",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report",
+								"{{created_report_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "DELETE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/report/{{created_report_id}}",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report",
+								"{{created_report_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Get All belongs to user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/comment",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Spesific",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/comment/1",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resBody = JSON.parse(responseBody)\r",
+									"pm.environment.set('created_comment_id', resBody.id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "report_id",
+									"value": "{{created_report_id}}",
+									"type": "text"
+								},
+								{
+									"key": "isi",
+									"value": "lorem",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/comment",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Report status 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "isi",
+									"value": "lorem",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								},
+								{
+									"key": "report_id",
+									"value": "{{created_report_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/comment/{{created_comment_id}}",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"comment",
+								"{{created_comment_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Success",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "DELETE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/report/{{created_report_id}}",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report",
+								"{{created_report_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
