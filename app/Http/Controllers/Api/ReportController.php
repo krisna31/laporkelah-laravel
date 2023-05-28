@@ -24,7 +24,7 @@ class ReportController extends Controller
                 ->orWhereHas('company', function ($query) {
                     $query->where('is_public', 1);
                 });
-        })->get();
+        })->with('comments')->get();
 
         return ReportResource::collection($reports);
     }
@@ -99,6 +99,7 @@ class ReportController extends Controller
     {
         $this->authorize('delete', $report);
         try {
+
             // delete old picture
             $image_path = public_path('/storage/report' . $report->foto);
             File::exists($image_path) && File::delete($image_path);

@@ -48,6 +48,6 @@ class AuthenticationController extends Controller
     }
     public function logout(Request $request)
     {
-        return 'hola';
+        return $request->user()->currentAccessToken()->delete();
     }
 }

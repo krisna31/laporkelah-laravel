@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,11 @@ Route::prefix('/auth/')->group(function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    // route for logout
+    Route::post('/auth/logout', [AuthenticationController::class, 'logout']);
+    // route for data
     Route::apiResources([
+        'user' => UserController::class,
         'company' => CompanyController::class,
         'report' => ReportController::class,
         'comment' => CommentController::class,

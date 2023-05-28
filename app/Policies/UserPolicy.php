@@ -23,7 +23,8 @@ class UserPolicy
     {
         return ($user->role_id === Role::$IS_SUPERADMIN)
             ||
-            ($user->role_id === Role::$IS_ADMIN && $user->company_id === $model->company_id);
+            ($user->role_id === Role::$IS_ADMIN && $user->company_id === $model->company_id) ||
+            ($user->role_id === Role::$IS_USER && $user->id === $model->id);
     }
 
     /**

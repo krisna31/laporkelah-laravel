@@ -22,6 +22,7 @@ class ReportResource extends JsonResource
             'foto' => $this->foto,
             // 'user' => new UserResource($this->whenLoaded('user')),
             // 'company' => new CompanyResource($this->whenLoaded('company')),
+            'comments' => $this->mergeWhen($request->comments, CommentResources::collection($this->comments)),
             'alasan_close' => $this->when(!$this->status, $this->alasan_close),
             'created_at' => $this->created_at,
         ];

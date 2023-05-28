@@ -35,6 +35,9 @@ class CommentController extends Controller
         // validate request
         $validated = $request->validated();
 
+        // add user_id to validated request
+        $validated['user_id'] = auth()->user()->id;
+
         // store the comment
         $comment = Comment::create($validated);
 
@@ -71,8 +74,12 @@ class CommentController extends Controller
     {
         $this->authorize('update', $comment);
 
+        $validated = $request->validated();
+        // add user id to validated request
+        $validated['updated_by'] = auth()->user()->id;
+
         // update the comment
-        $comment = $comment->update($request->validated());
+        $comment = $comment->update($validated);
 
         // return response to frontend if fail or success with flash message
         if (!$comment) return redirect()->back()->with('error', 'Komentar gagal diubah');
