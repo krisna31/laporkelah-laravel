@@ -8,29 +8,63 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-1 justify-between">
-                    <a href="{{ route('company.index') }}"
-                        class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h2 class="text-center">Total Registered Company</h2>
-                        <p class="text-center">0 Company</p>
-                    </a>
-                    <a href="{{ route('user.index') }}"
-                        class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h2 class="text-center">Total Registered User</h2>
-                        <p class="text-center">0 User</p>
-                    </a>
-                    <a href="{{ route('role.index') }}"
-                        class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h2 class="text-center">Total Role</h2>
-                        <p class="text-center">0 Role</p>
-                    </a>
-                    <a href="{{ route('report.index') }}"
-                        class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h2 class="text-center">Total Report</h2>
-                        <p class="text-center">0 Report</p>
-                    </a>
+                <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-1 justify-between flex-col">
+                    <div class="container-fluid flex    justify-between">
+
+                        <a href="{{ route('company.index') }}"
+                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h2 class="text-center">Total Registered Company</h2>
+                            <p class="text-center">{{ $companies->count() }} Company</p>
+                        </a>
+                        <a href="{{ route('user.index') }}"
+                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h2 class="text-center">Total Registered User</h2>
+                            <p class="text-center">{{ $users->count() }} User</p>
+                        </a>
+                        <a href="{{ route('role.index') }}"
+                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h2 class="text-center">Total Role</h2>
+                            <p class="text-center">{{ $roles->count() }} Role</p>
+                        </a>
+                        <a href="{{ route('report.index') }}"
+                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h2 class="text-center">Total Report</h2>
+                            <p class="text-center">{{ $reports->count() }} Report</p>
+                        </a>
+                    </div>
+                    <div class="container-fluid">
+                        <canvas id="chartUser"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @section('script')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('chartUser');
+
+            const data = {
+                labels: [2022, 2023],
+                datasets: [{
+                    label: 'Regis User',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    @endsection
+
 </x-app-layout>

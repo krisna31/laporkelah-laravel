@@ -1,6 +1,7 @@
 import './bootstrap';
 
 import 'flowbite';
+import Alpine from 'alpinejs';
 
 import * as FilePond from 'filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
@@ -11,12 +12,12 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
+
 FilePond.registerPlugin(FilePondPluginImagePreview,
     FilePondPluginFileValidateType,
     FilePondPluginImageValidateSize,
     FilePondPluginFileValidateSize);
 
-import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 window.FilePond = FilePond;
