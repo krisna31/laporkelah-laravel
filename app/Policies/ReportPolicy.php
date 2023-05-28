@@ -32,9 +32,7 @@ class ReportPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role_id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->id == Role::$IS_ADMIN && auth()->user()->company_id == request()->company_id && auth()->user()->id == request()->user_id) ||
-            (auth()->user()->id == Role::$IS_USER && auth()->user()->company_id == request()->company_id && auth()->user()->id == request()->user_id);
+        return in_array($user->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
     }
 
     /**
@@ -53,7 +51,8 @@ class ReportPolicy
     public function delete(User $user, Report $report): bool
     {
         return $user->role_id == Role::$IS_SUPERADMIN ||
-            ($user->role_id == Role::$IS_ADMIN && $user->company_id == $report->company_id);
+            ($user->role_id == Role::$IS_ADMIN && $user->company_id == $report->company_id) ||
+            ($user->role_id == Role::$IS_USER && $user->company_id == $report->company_id && $report->user_id == $user->id);
     }
 
     /**

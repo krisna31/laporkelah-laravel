@@ -24,7 +24,7 @@ class CompanyPolicy
     {
         return ($user->role_id === Role::$IS_SUPERADMIN)
             ||
-            ($user->role_id === Role::$IS_ADMIN && $user->company_id === $company->id);
+            (in_array($user->role_id, [Role::$IS_ADMIN, Role::$IS_USER]) && $user->company_id === $company->id);
     }
 
     /**

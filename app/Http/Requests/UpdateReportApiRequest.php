@@ -12,7 +12,7 @@ class UpdateReportApiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return in_array(auth()->user()->id , [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
+        return in_array(auth()->user()->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
     }
 
     /**
@@ -23,8 +23,6 @@ class UpdateReportApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'company_id' => 'required|exists:companies,id',
             'title' => 'required|string',
             'keterangan' => 'required|string|max:1000',
             'status' => 'required|boolean',

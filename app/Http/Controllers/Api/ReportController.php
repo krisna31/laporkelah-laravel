@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateReportApiRequest;
 use App\Http\Resources\ReportResource;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ReportController extends Controller
@@ -41,6 +42,9 @@ class ReportController extends Controller
             $filename = uniqid() . '-' . $file->getClientOriginalName();
             $file->storeAs($folder, $filename);
 
+            $validated['user_id'] = auth()->user()->id;
+            $validated['company_id'] = auth()->user()->company_id;
+            $validated['status'] = 1;
             $validated['foto'] = $filename;
 
             $report = Report::create($validated);
@@ -65,17 +69,22 @@ class ReportController extends Controller
      */
     public function update(UpdateReportApiRequest $request, Report $report)
     {
-        // $this->authorize('update', $report);
+        $this->authorize('update', $report);
         try {
+            // delete old picture
+            $image_path = public_path('/storage/report' . $report->foto);
+            File::exists($image_path) && File::delete($image_path);
+
             $validated = $request->validated();
             $file = $request->file('foto');
             $folder = "public\\report";
             $filename = uniqid() . '-' . $file->getClientOriginalName();
             $file->storeAs($folder, $filename);
 
+            $validated['updated_by'] = auth()->user()->id;
             $validated['foto'] = $filename;
 
-            $report = Report::create($validated);
+            $report->update($validated);
 
             return new ReportResource($report);
         } catch (\Exception $exception) {
@@ -88,6 +97,16 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        $this->authorize('delete', $report);
+        try {
+            // delete old picture
+            $image_path = public_path('/storage/report' . $report->foto);
+            File::exists($image_path) && File::delete($image_path);
+
+            $report->delete();
+            return response()->json(null, 204);
+        } catch (\Exception $exception) {
+            throw new HttpException(400, "Invalid data - {$exception->getMessage()}");
+        }
     }
 }

@@ -47,7 +47,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        $this->authorize('view', Company::class);
+        $this->authorize('view', $company);
         return new CompanyResource($company);
     }
 

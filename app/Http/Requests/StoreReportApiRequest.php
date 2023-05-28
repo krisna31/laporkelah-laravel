@@ -12,9 +12,7 @@ class StoreReportApiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id && auth()->user()->id == request()->user_id) ||
-            (auth()->user()->id == Role::$IS_USER && auth()->user()->company_id == $this->company_id && auth()->user()->id == request()->user_id);
+        return in_array(auth()->user()->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
     }
 
     /**
@@ -25,11 +23,8 @@ class StoreReportApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'company_id' => 'required|exists:companies,id',
             'title' => 'required|string',
             'keterangan' => 'required|string|max:1000',
-            'status' => 'required|boolean',
             'alasan_close' => 'required_if:status,0',
             'foto' => 'required|image|file',
         ];
