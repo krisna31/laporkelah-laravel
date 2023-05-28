@@ -33,7 +33,7 @@
                         </a>
                     </div>
                     <div class="container-fluid">
-                        <canvas id="chartUser"></canvas>
+                        {!! $chart->container() !!}
                     </div>
                 </div>
             </div>
@@ -41,30 +41,6 @@
     </div>
     @section('script')
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            const ctx = document.getElementById('chartUser');
-
-            const data = {
-                labels: [2022, 2023],
-                datasets: [{
-                    label: 'Regis User',
-                    data: [12, 19, 3, 5, 2, 3],
-                    borderWidth: 1
-                }]
-            }
-
-            new Chart(ctx, {
-                type: 'line',
-                data,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        </script>
+        {!! $chart->script() !!}
     @endsection
-
 </x-app-layout>

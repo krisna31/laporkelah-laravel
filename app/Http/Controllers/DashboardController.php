@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\UserChart;
 use App\Models\Company;
 use App\Models\Report;
 use App\Models\Role;
@@ -20,6 +21,17 @@ class DashboardController extends Controller
         $companies = Company::all();
         $reports = Report::all();
 
-        return view('dashboard', compact('users', 'roles', 'companies', 'reports'));
+        $data = collect([]); // Could also be an array
+
+        for ($days_backwards = 2; $days_backwards >= 0; $days_backwards--) {
+            // Could also be an array_push if using an array rather than a collection.
+            $data->push(User::whereDate('created_at', today()->subDays($days_backwards))->count());
+        }
+
+        $chart = new UserChart;
+        $chart->labels(['2 days ago', 'Yesterday', 'Today']);
+        $chart->dataset('My dataset', 'line', $data);
+
+        return view('dashboard', compact('users', 'roles', 'companies', 'reports', 'chart'));
     }
 }
