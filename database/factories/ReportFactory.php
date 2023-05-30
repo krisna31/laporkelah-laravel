@@ -25,6 +25,7 @@ class ReportFactory extends Factory
             'keterangan' => fake()->sentence(random_int(5, 30)),
             'status' => fake()->boolean(),
             'foto' => fake()->uuid(),
+            'created_at' => fake()->dateTimeBetween('-4 years', 'now'),
         ];
     }
 }

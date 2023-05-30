@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('superadmin'),
                 'role_id' => 1,
                 'foto' => 'abdddc',
-                'company_id' => null
+                'company_id' => null,
+                'created_at' => now(),
             ],
             [
                 'name' => "admin",
@@ -28,7 +29,8 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('admin'),
                 'role_id' => 2,
                 'foto' => 'asbc',
-                'company_id' => 1
+                'company_id' => 1,
+                'created_at' => now(),
             ],
             [
                 'name' => "user",
@@ -36,10 +38,11 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('user'),
                 'role_id' => 3,
                 'foto' => 'adbc',
-                'company_id' => 2
+                'company_id' => 2,
+                'created_at' => now(),
             ]
         ]);
 
-        User::factory(30)->create();
+        User::factory(50)->create();
     }
 }

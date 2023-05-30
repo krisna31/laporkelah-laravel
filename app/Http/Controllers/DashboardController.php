@@ -7,7 +7,7 @@ use App\Models\Company;
 use App\Models\Report;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class DashboardController extends Controller
 {
@@ -15,27 +15,124 @@ class DashboardController extends Controller
     {
         $this->authorize('isAdmin');
 
-        // get user order by created_at
-        $users = User::orderBy('created_at', 'desc')->get();
-        $roles = Role::all();
-        $companies = Company::all();
-        $reports = Report::all();
+        if (auth()->user()->role_id == Role::$IS_SUPERADMIN) {
+            $users = User::orderBy('created_at', 'desc')->get();
+            $roles = Role::all();
+            $companies = Company::all();
+            $reports = Report::orderBy('created_at', 'desc')->get();
+            $chart = new LaravelChart([
+                'chart_title' => 'Users by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\User',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'bar',
+                'chart_color' => '10, 20, 30',
+            ], [
+                'chart_title' => 'Reports by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Report',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'bar',
+                'chart_color' => '255,0,0',
+            ], [
+                'chart_title' => 'Comments by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Comment',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'bar',
+                'chart_color' => '0,255,0',
+            ]);
 
-        $data = collect([]); // Could also be an array
+            $chart2 = new LaravelChart([
+                'chart_title' => 'Reports by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Report',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'pie',
+                'style_class' => 'w-1/2 h-1/2'
+            ]);
 
-        $uniqueYearUser = User::selectRaw('YEAR(created_at) year')
-            ->orderBy('year')
-            ->distinct()
-            ->pluck('year');
+            $chart3 = new LaravelChart([
+                'chart_title' => 'Users by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\User',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'pie',
+                'chart_color' => '10, 20, 30',
+            ]);
+        } else {
+            $users = User::where(['company_id' => auth()->user()->company_id])->orderBy('created_at', 'desc')->get();
+            $roles = Role::all();
+            $companies = Company::where(function ($query) {
+                $query->where('id', auth()->user()->company_id)
+                    ->orWhere('is_public', 1);
+            })->get();
+            $reports = Report::orderBy('created_at', 'desc')->get();
+            $companyId = auth()->user()->company_id;
+            $chart = new LaravelChart([
+                'chart_title' => 'Users by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\User',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'bar',
+                'chart_color' => '10, 20, 30',
+                'where_raw' => "company_id = $companyId",
+            ], [
+                'chart_title' => 'Reports by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Report',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'bar',
+                'chart_color' => '255,0,0',
+            ], [
+                'chart_title' => 'Comments by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Comment',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'bar',
+                'chart_color' => '0,255,0',
+            ]);
 
-        foreach ($uniqueYearUser as $key => $value) {
-            $data->push(User::whereYear('created_at', $value)->count());
+            $chart2 = new LaravelChart([
+                'chart_title' => 'Reports by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Report',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'pie',
+                'style_class' => 'w-1/2 h-1/2'
+            ]);
+
+            $chart3 = new LaravelChart([
+                'chart_title' => 'Users by years',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\User',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'year',
+                'chart_type' => 'pie',
+                'chart_color' => '10, 20, 30',
+            ]);
         }
 
-        $chart = new UserChart;
-        $chart->labels($uniqueYearUser);
-        $chart->dataset('Total User Register', 'line', $data);
-
-        return view('dashboard', compact('users', 'roles', 'companies', 'reports', 'chart'));
+        return view(
+            'dashboard',
+            compact(
+                'users',
+                'roles',
+                'companies',
+                'reports',
+                'chart',
+                'chart2',
+                'chart3',
+            )
+        );
     }
 }
