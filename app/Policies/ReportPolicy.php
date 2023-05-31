@@ -32,7 +32,7 @@ class ReportPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
+        return in_array($user->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
     }
 
     /**
