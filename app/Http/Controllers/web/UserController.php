@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Utils;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Company;
@@ -10,9 +11,7 @@ use App\Models\Role;
 use App\Models\TemporaryFile;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -26,14 +25,17 @@ class UserController extends Controller
 
         if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
             if (request('search')) {
-                $users = User::where('name', 'LIKE', '%' . request('search') . '%')->paginate(5);
+                $users = User::where('name', 'LIKE', '%' . request('search') . '%')->orderBy('created_at', 'desc')->paginate(Utils::$PAGINATE);
             } else {
-                $users = User::paginate(5);
+                $users = User::orderBy('created_at', 'desc')->paginate(Utils::$PAGINATE);
             }
             return view('superadmin.user.index', compact('users'));
         }
 
-        $users = User::where(['company_id' => auth()->user()->company_id])->where('name', 'LIKE', '%' . request('search') . '%')->paginate(5);
+        $users = User::where(['company_id' => auth()->user()->company_id])
+            ->where('name', 'LIKE', '%' . request('search') . '%')
+            ->orderBy('created_at', 'desc')
+            ->paginate(Utils::$PAGINATE);
         return view('superadmin.user.index', compact('users'));
     }
 
@@ -44,10 +46,10 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $companies = auth()->user()->role_id == Role::$IS_SUPERADMIN ? Company::all() : Company::where('id','=', auth()->user()->company_id)->get();
+        $companies = auth()->user()->role_id == Role::$IS_SUPERADMIN ? Company::all() : Company::where('id', '=', auth()->user()->company_id)->get();
         $roles = Role::where('id', '>=', auth()->user()->role_id)->get();
 
-        return view('user.create',compact('companies', 'roles'));
+        return view('user.create', compact('companies', 'roles'));
     }
 
     /**

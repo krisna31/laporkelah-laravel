@@ -149,7 +149,7 @@
                                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
+                                                <button type="submit" onclick="return confirm('Are you sure?')"
                                                     class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -167,7 +167,9 @@
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td class="px-6 py-4 text-center" colspan="3">
                                             <blockquote>
-                                                <p class="text-2xl font-semibold text-gray-900 dark:text-white uppercase text-center">Data Kosong</p>
+                                                <p
+                                                    class="text-2xl font-semibold text-gray-900 dark:text-white uppercase text-center">
+                                                    Data Kosong</p>
                                             </blockquote>
                                         </td>
                                     </tr>

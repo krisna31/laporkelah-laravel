@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Utils;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use App\Models\Role;
@@ -21,9 +22,9 @@ class CompanyController extends Controller
 
         if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
             if (request('search')) {
-                $companies = Company::where('nama', 'LIKE', '%' . request('search') . '%')->paginate(5);
+                $companies = Company::where('nama', 'LIKE', '%' . request('search') . '%')->orderBy('created_at', 'desc')->paginate(Utils::$PAGINATE);
             } else {
-                $companies = Company::paginate(5);
+                $companies = Company::orderBy('created_at', 'desc')->paginate(Utils::$PAGINATE);
             }
             return view('superadmin.company.index', compact('companies'));
         }

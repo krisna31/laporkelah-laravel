@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Utils;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
@@ -18,9 +19,9 @@ class RoleController extends Controller
         $this->authorize('viewAny', Role::class);
 
         if (request('search'))
-            $roles = Role::where('nama', 'LIKE', '%' . request('search') . '%')->paginate(5);
+            $roles = Role::where('nama', 'LIKE', '%' . request('search') . '%')->paginate(Utils::$PAGINATE);
         else
-            $roles = Role::paginate(5);
+            $roles = Role::paginate(Utils::$PAGINATE);
 
         return view('superadmin.role.index', compact('roles'));
     }
@@ -48,9 +49,9 @@ class RoleController extends Controller
 
         // Redirect the user to index page with a success notification or failed notification.
         return $isSuccess ?
-                redirect()->route('role.index')->with('success', "Data role $request->jabatan Berhasil Dibuat")
-                :
-                redirect()->route('role.index')->with('failed', "Data role $request->jabatan Gagal Dibuat");
+            redirect()->route('role.index')->with('success', "Data role $request->jabatan Berhasil Dibuat")
+            :
+            redirect()->route('role.index')->with('failed', "Data role $request->jabatan Gagal Dibuat");
     }
 
     /**
