@@ -7,12 +7,20 @@ use App\Models\Company;
 use App\Models\Report;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->role_id == Role::$IS_USER) {
+            Auth::guard('web')->logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+            return redirect('/');
+        }
+
         $this->authorize('isAdmin');
 
         if (auth()->user()->role_id == Role::$IS_SUPERADMIN) {
@@ -29,22 +37,22 @@ class DashboardController extends Controller
                 'chart_type' => 'bar',
                 'chart_color' => '10, 20, 30',
             ], [
-                'chart_title' => 'Reports by years',
-                'report_type' => 'group_by_date',
-                'model' => 'App\Models\Report',
-                'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
-                'chart_type' => 'bar',
-                'chart_color' => '255,0,0',
-            ], [
-                'chart_title' => 'Comments by years',
-                'report_type' => 'group_by_date',
-                'model' => 'App\Models\Comment',
-                'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
-                'chart_type' => 'bar',
-                'chart_color' => '0,255,0',
-            ]);
+                    'chart_title' => 'Reports by years',
+                    'report_type' => 'group_by_date',
+                    'model' => 'App\Models\Report',
+                    'group_by_field' => 'created_at',
+                    'group_by_period' => 'year',
+                    'chart_type' => 'bar',
+                    'chart_color' => '255,0,0',
+                ], [
+                    'chart_title' => 'Comments by years',
+                    'report_type' => 'group_by_date',
+                    'model' => 'App\Models\Comment',
+                    'group_by_field' => 'created_at',
+                    'group_by_period' => 'year',
+                    'chart_type' => 'bar',
+                    'chart_color' => '0,255,0',
+                ]);
 
             $chart2 = new LaravelChart([
                 'chart_title' => 'Reports by years',
@@ -86,24 +94,24 @@ class DashboardController extends Controller
                 'chart_color' => '10, 20, 30',
                 'where_raw' => "company_id = $companyId",
             ], [
-                'chart_title' => 'Reports by years',
-                'report_type' => 'group_by_date',
-                'model' => 'App\Models\Report',
-                'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
-                'chart_type' => 'bar',
-                'chart_color' => '255,0,0',
-                'where_raw' => "company_id = $companyId",
-            ], [
-                'chart_title' => 'Comments by years',
-                'report_type' => 'group_by_date',
-                'model' => 'App\Models\Comment',
-                'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
-                'chart_type' => 'bar',
-                'chart_color' => '0,255,0',
-                'where_raw' => "report_id in(select id from reports where company_id = $companyId)",
-            ]);
+                    'chart_title' => 'Reports by years',
+                    'report_type' => 'group_by_date',
+                    'model' => 'App\Models\Report',
+                    'group_by_field' => 'created_at',
+                    'group_by_period' => 'year',
+                    'chart_type' => 'bar',
+                    'chart_color' => '255,0,0',
+                    'where_raw' => "company_id = $companyId",
+                ], [
+                    'chart_title' => 'Comments by years',
+                    'report_type' => 'group_by_date',
+                    'model' => 'App\Models\Comment',
+                    'group_by_field' => 'created_at',
+                    'group_by_period' => 'year',
+                    'chart_type' => 'bar',
+                    'chart_color' => '0,255,0',
+                    'where_raw' => "report_id in(select id from reports where company_id = $companyId)",
+                ]);
 
             $chart2 = new LaravelChart([
                 'chart_title' => 'Reports by years',

@@ -21,7 +21,7 @@
                             <h2 class="text-center">Total User</h2>
                             <p class="text-center">{{ $users->count() }} User</p>
                         </a>
-                        @can('viewAny', Role::class)
+                        @can('viewAny', App\Models\Role::class)
                             <a href="{{ route('role.index') }}"
                                 class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-green-700 dark:text-black">
                                 <h2 class="text-center">Total Role</h2>
