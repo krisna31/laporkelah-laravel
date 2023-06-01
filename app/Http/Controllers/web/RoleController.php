@@ -59,7 +59,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $this->authorize('view', Role::class);
+        $this->authorize('view', $role);
         return view('superadmin.role.show', compact('role'));
     }
 

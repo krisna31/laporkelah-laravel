@@ -7,7 +7,7 @@
             <th scope="col" class="px-6 py-3">
                 Role
             </th>
-            @if (Str::contains(request()->fullUrl(), 'user'))
+            @if (Str::contains(request()->fullUrl(), 'user') || Str::contains(request()->fullUrl(), 'role'))
                 <th scope="col" class="px-6 py-3">
                     Company
                 </th>
@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody class="my-6">
-        @forelse ($users as $user)
+        @forelse ($users->sortBy('company')->sortBy('role') as $user)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                     <img class="w-10 h-10 rounded-full" src="{{ asset("storage/user/$user->foto") }}"
@@ -31,7 +31,7 @@
                 <td class="px-6 py-4">
                     {{ $user->role->jabatan }}
                 </td>
-                @if (Str::contains(request()->fullUrl(), 'user'))
+                @if (Str::contains(request()->fullUrl(), 'user') || Str::contains(request()->fullUrl(), 'role'))
                     <td class="px-6 py-4">
                         {{ $user->company->nama ?? 'null' }}
                     </td>

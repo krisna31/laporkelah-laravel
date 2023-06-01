@@ -32,7 +32,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="px-6 py-4">
                                         {{ $role->id }}
                                     </td>
@@ -51,8 +52,11 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <h1 class="text-center bold my-5 text-3xl">Users Belongs to This Role</h1>
+                        @include('layouts.table-users', [
+                            'users' => $role->users,
+                        ])
                     </div>
-
                 </div>
             </div>
         </div>
