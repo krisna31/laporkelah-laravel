@@ -59,7 +59,7 @@ class DashboardController extends Controller
                 'report_type' => 'group_by_string',
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'status',
-                'labels' => ['0' => 'Open', '1' => 'Close'],
+                'labels' => ['0' => 'Close', '1' => 'Open'],
                 'chart_type' => 'pie',
             ]);
 
@@ -116,7 +116,7 @@ class DashboardController extends Controller
                 'report_type' => 'group_by_string',
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'status',
-                'labels' => ['0' => 'Open', '1' => 'Close'],
+                'labels' => ['0' => 'Close', '1' => 'Open'],
                 'chart_type' => 'pie',
                 'where_raw' => "company_id = $companyId",
             ]);

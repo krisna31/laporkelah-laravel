@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Report extends Model
 {
     use HasFactory;
-    public static $IS_OPEN = 0;
-    public static $IS_CLOSE = 1;
+    public static $IS_CLOSE = 0;
+    public static $IS_OPEN = 1;
     protected $guarded = ['id'];
 
     public function comments()
