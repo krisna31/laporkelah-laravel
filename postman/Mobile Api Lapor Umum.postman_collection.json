@@ -10,7 +10,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Login",
+					"name": "Login and Logout",
 					"item": [
 						{
 							"name": "Login With nothing just url",
@@ -368,11 +368,12 @@
 									]
 								},
 								"url": {
-									"raw": "{{base-path}}auth/register",
+									"raw": "{{base-path}}/auth/register",
 									"host": [
-										"{{base-path}}auth"
+										"{{base-path}}"
 									],
 									"path": [
+										"auth",
 										"register"
 									]
 								}
@@ -479,6 +480,45 @@
 							}
 						],
 						"url": {
+							"raw": "{{base-path}}/company?reports=true",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"company"
+							],
+							"query": [
+								{
+									"key": "reports",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all company with reports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
 							"raw": "{{base-path}}/company",
 							"host": [
 								"{{base-path}}"
@@ -512,13 +552,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{base-path}}/company/2",
+							"raw": "{{base-path}}/company/1",
 							"host": [
 								"{{base-path}}"
 							],
 							"path": [
 								"company",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -546,13 +586,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{base-path}}/company/2?reports=true",
+							"raw": "{{base-path}}/company/1?reports=true",
 							"host": [
 								"{{base-path}}"
 							],
 							"path": [
 								"company",
-								"2"
+								"1"
 							],
 							"query": [
 								{
@@ -624,7 +664,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base-path}}/report?comments=1",
+							"raw": "{{base-path}}/report?comments=true",
 							"host": [
 								"{{base-path}}"
 							],
@@ -634,7 +674,7 @@
 							"query": [
 								{
 									"key": "comments",
-									"value": "1"
+									"value": "true"
 								}
 							]
 						}
@@ -663,13 +703,53 @@
 							}
 						],
 						"url": {
-							"raw": "{{base-path}}/report/1",
+							"raw": "{{base-path}}/report/4",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Spesific Report with comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/report/1?comments=true",
 							"host": [
 								"{{base-path}}"
 							],
 							"path": [
 								"report",
 								"1"
+							],
+							"query": [
+								{
+									"key": "comments",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -988,13 +1068,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{base-path}}/comment/1",
+							"raw": "{{base-path}}/comment/{{created_comment_id}}",
 							"host": [
 								"{{base-path}}"
 							],
 							"path": [
 								"comment",
-								"1"
+								"{{created_comment_id}}"
 							]
 						}
 					},
@@ -1098,6 +1178,12 @@
 									"key": "report_id",
 									"value": "{{created_report_id}}",
 									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -1146,13 +1232,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{base-path}}/report/{{created_report_id}}",
+							"raw": "{{base-path}}/comment/{{created_comment_id}}",
 							"host": [
 								"{{base-path}}"
 							],
 							"path": [
-								"report",
-								"{{created_report_id}}"
+								"comment",
+								"{{created_comment_id}}"
 							]
 						}
 					},

@@ -14,7 +14,7 @@ class CompanyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN]);
+        return in_array($user->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
     }
 
     /**
@@ -24,7 +24,7 @@ class CompanyPolicy
     {
         return ($user->role_id === Role::$IS_SUPERADMIN)
             ||
-            (in_array($user->role_id, [Role::$IS_ADMIN, Role::$IS_USER]) && $user->company_id === $company->id);
+            (in_array($user->role_id, [Role::$IS_ADMIN, Role::$IS_USER]) && $user->company_id === $company->id || $company->is_public);
     }
 
     /**
