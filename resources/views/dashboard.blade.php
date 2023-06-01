@@ -44,20 +44,24 @@
                         </div>
                     </div>
                     <div class="container-fluid my-10 p-10 dark:bg-slate-300 rounded">
-                        {!! $chart4->renderHtml() !!}
+                        {!! $chartLine->renderHtml() !!}
                     </div>
                     <div class="container-fluid my-10 p-10 dark:bg-slate-300 rounded">
-                        {!! $chart->renderHtml() !!}
+                        {!! $chartBar->renderHtml() !!}
                     </div>
                     <div class="container-fluid flex flex-col gap-8 justify-center md:flex-row items-center">
                         <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
-                            <h1 class="text-center bold my-5 text-3xl mt-10">{{ $chart2->options['chart_title'] }}</h1>
-                            {!! $chart2->renderHtml() !!}
+                            <h1 class="text-center bold my-5 text-3xl mt-10">{{ $chartReport->options['chart_title'] }}
+                            </h1>
+                            {!! $chartReport->renderHtml() !!}
                         </div>
-                        <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
-                            <h1 class="text-center bold my-5 text-3xl mt-10">{{ $chart3->options['chart_title'] }}</h1>
-                            {!! $chart3->renderHtml() !!}
-                        </div>
+                        @isset($chartCompany)
+                            <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
+                                <h1 class="text-center bold my-5 text-3xl mt-10">
+                                    {{ $chartCompany->options['chart_title'] }}</h1>
+                                {!! $chartCompany->renderHtml() !!}
+                            </div>
+                        @endisset
                     </div>
                 </div>
             </div>
@@ -65,10 +69,12 @@
         @include('layouts.footer')
     </div>
     @section('script')
-        {!! $chart->renderChartJsLibrary() !!}
-        {!! $chart->renderJs() !!}
-        {!! $chart2->renderJs() !!}
-        {!! $chart3->renderJs() !!}
-        {!! $chart4->renderJs() !!}
+        {!! $chartBar->renderChartJsLibrary() !!}
+        {!! $chartBar->renderJs() !!}
+        {!! $chartReport->renderJs() !!}
+        {!! $chartLine->renderJs() !!}
+        @isset($chartCompany)
+            {!! $chartCompany->renderJs() !!}
+        @endisset
     @endsection
 </x-app-layout>
