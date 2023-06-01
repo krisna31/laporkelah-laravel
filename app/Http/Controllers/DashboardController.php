@@ -29,7 +29,7 @@ class DashboardController extends Controller
             $companies = Company::all();
             $reports = Report::orderBy('created_at', 'desc')->get();
             $chartBar = new LaravelChart([
-                'chart_title' => 'Users by Months',
+                'chart_title' => 'Users Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\User',
                 'group_by_field' => 'created_at',
@@ -39,7 +39,7 @@ class DashboardController extends Controller
                 'filter_days' => 60,
                 'chart_color' => '10, 20, 30',
             ], [
-                'chart_title' => 'Reports by Months',
+                'chart_title' => 'Reports Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'created_at',
@@ -49,7 +49,7 @@ class DashboardController extends Controller
                 'filter_days' => 60,
                 'chart_color' => '255,0,0',
             ], [
-                'chart_title' => 'Comments by Months',
+                'chart_title' => 'Comments Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Comment',
                 'group_by_field' => 'created_at',
@@ -62,7 +62,7 @@ class DashboardController extends Controller
 
 
             $chartLine = new LaravelChart([
-                'chart_title' => 'Reports by Days',
+                'chart_title' => 'Reports Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'created_at',
@@ -73,7 +73,7 @@ class DashboardController extends Controller
                 'continuous_time' => true,
                 'chart_color' => '255,0,0',
             ], [
-                'chart_title' => 'Comments by Days',
+                'chart_title' => 'Comments Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Comment',
                 'group_by_field' => 'created_at',
@@ -84,7 +84,7 @@ class DashboardController extends Controller
                 'continuous_time' => true,
                 'chart_color' => '1,255,0',
             ], [
-                'chart_title' => 'Users by Days',
+                'chart_title' => 'Users Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\User',
                 'group_by_field' => 'created_at',
@@ -132,7 +132,7 @@ class DashboardController extends Controller
             $companyId = auth()->user()->company_id;
 
             $chartBar = new LaravelChart([
-                'chart_title' => 'Users by Months',
+                'chart_title' => 'Users Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\User',
                 'group_by_field' => 'created_at',
@@ -143,7 +143,7 @@ class DashboardController extends Controller
                 'where_raw' => "company_id = $companyId",
                 'chart_color' => '10, 20, 30',
             ], [
-                'chart_title' => 'Reports by Months',
+                'chart_title' => 'Reports Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'created_at',
@@ -154,7 +154,7 @@ class DashboardController extends Controller
                 'where_raw' => "company_id = $companyId",
                 'chart_color' => '255,0,0',
             ], [
-                'chart_title' => 'Comments by Months',
+                'chart_title' => 'Comments Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Comment',
                 'group_by_field' => 'created_at',
@@ -180,7 +180,7 @@ class DashboardController extends Controller
             ]);
 
             $chartLine = new LaravelChart([
-                'chart_title' => 'Reports by Days',
+                'chart_title' => 'Reports Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'created_at',
@@ -192,7 +192,7 @@ class DashboardController extends Controller
                 'chart_color' => '255,0,0',
                 'where_raw' => "company_id = $companyId",
             ], [
-                'chart_title' => 'Comments by Days',
+                'chart_title' => 'Comments Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Comment',
                 'group_by_field' => 'created_at',
@@ -204,7 +204,7 @@ class DashboardController extends Controller
                 'chart_color' => '1,255,0',
                 'where_raw' => "report_id in(select id from reports where company_id = $companyId)",
             ], [
-                'chart_title' => 'Users by Days',
+                'chart_title' => 'Users Created',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\User',
                 'group_by_field' => 'created_at',
