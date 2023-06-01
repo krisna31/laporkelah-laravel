@@ -28,8 +28,8 @@
                         <!-- logo -->
                         <div class="mt-4">
                             <x-input-label for="img" :value="__('Logo Perusahaan')" class="mb-4" />
-                            <img class="rounded-lg mx-auto my-4 shadow-xl dark:shadow-gray-800"  src="{{ asset("storage/company/$company->logo") }}"
-                                alt="{{ $company->nama }}">
+                            <img class="rounded-lg mx-auto my-4 shadow-xl dark:shadow-gray-800"
+                                src="{{ asset("storage/company/$company->logo") }}" alt="{{ $company->nama }}">
                             <x-input-error :messages="$errors->get('img')" />
                             <input type="file" name="img" id="img">
                         </div>
