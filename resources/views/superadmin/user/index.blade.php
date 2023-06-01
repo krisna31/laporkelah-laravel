@@ -120,7 +120,7 @@
                                             {{ $user->role->jabatan }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $user->company->nama ?? 'superadmin' }}
+                                            {{ $user->company->nama ?? 'null' }}
                                         </td>
                                         <td class="px-6 py-4 flex gap-3">
                                             <a href="{{ route('user.show', $user) }}" type="button"
