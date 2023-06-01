@@ -1,6 +1,6 @@
 @forelse ($report->comments ?? $comments as $comment)
     <div class="flex flex-row gap-5 w-1/2">
-        <img src="{{ file_exists(asset('storage/user/' . $comment->user->foto)) ? asset('storage/user/' . $comment->user->foto) : asset('default.png') }}"
+        <img src="{{ file_exists(public_path('storage/user/' . $comment->user->foto)) ? asset('storage/user/' . $comment->user->foto) : asset('default.png') }}"
             alt="{{ $comment->user->name }}" class="w-10 h-10 rounded-full me-4">
         <div class="flex flex-col justify-between gap-2">
             <div class="flex flex-row">{{ $comment->user->name }} |

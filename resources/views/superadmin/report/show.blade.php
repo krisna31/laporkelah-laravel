@@ -84,7 +84,7 @@
                             @endcan
                         </h1>
                         <img class="h-auto max-w-xl rounded-lg shadow-xl dark:shadow-gray-800 text-center"
-                            src="{{ file_exists(asset('storage/report/' . $report->foto)) ? asset('storage/report/' . $report->foto) : asset('logo.png') }}"
+                            src="{{ file_exists(public_path('storage/report/' . $report->foto)) ? asset('storage/report/' . $report->foto) : asset('logo.png') }}"
                             alt="{{ $report->title }}">
                         <small class="ml-2 font-semibold text-gray-500 dark:text-gray-400">Created by :
                             {{ $report->user->name }}</small>

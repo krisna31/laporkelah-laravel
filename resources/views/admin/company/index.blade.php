@@ -33,7 +33,7 @@
                                         <th scope="row"
                                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                             <img class="w-10 h-10 rounded-full"
-                                                src="{{ file_exists(asset("storage/company/$belongsTo->logo") ? asset("storage/company/$belongsTo->logo") : asset('logo.png')) }}"
+                                                src="{{ file_exists(public_path("storage/company/$belongsTo->logo") ? asset("storage/company/$belongsTo->logo") : asset('logo.png')) }}"
                                                 alt="{{ $belongsTo->nama }}">
                                             <div class="pl-3">
                                                 <div class="text-base font-semibold">{{ $belongsTo->nama }}
