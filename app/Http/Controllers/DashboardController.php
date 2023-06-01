@@ -29,28 +29,34 @@ class DashboardController extends Controller
             $companies = Company::all();
             $reports = Report::orderBy('created_at', 'desc')->get();
             $chart = new LaravelChart([
-                'chart_title' => 'Users by years',
+                'chart_title' => 'Users by Months',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\User',
                 'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
+                'group_by_period' => 'month',
                 'chart_type' => 'bar',
+                'filter_field' => 'created_at',
+                'filter_days' => 60,
                 'chart_color' => '10, 20, 30',
             ], [
-                'chart_title' => 'Reports by years',
+                'chart_title' => 'Reports by Months',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
+                'group_by_period' => 'month',
                 'chart_type' => 'bar',
+                'filter_field' => 'created_at',
+                'filter_days' => 60,
                 'chart_color' => '255,0,0',
             ], [
-                'chart_title' => 'Comments by years',
+                'chart_title' => 'Comments by Months',
                 'report_type' => 'group_by_date',
                 'model' => 'App\Models\Comment',
                 'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
+                'group_by_period' => 'month',
                 'chart_type' => 'bar',
+                'filter_field' => 'created_at',
+                'filter_days' => 60,
                 'chart_color' => '0,255,0',
             ]);
 
@@ -67,11 +73,14 @@ class DashboardController extends Controller
             ]);
 
             $chart3 = new LaravelChart([
-                'chart_title' => 'Users by years',
-                'report_type' => 'group_by_date',
-                'model' => 'App\Models\User',
-                'group_by_field' => 'created_at',
-                'group_by_period' => 'year',
+                'chart_title' => 'Group by Public',
+                'report_type' => 'group_by_string',
+                'model' => 'App\Models\Company',
+                'group_by_field' => 'is_public',
+                'labels' => ['0' => 'Private', '1' => 'Public'],
+                'chart_color' => [
+                    'Private' => '234, 179, 8', 'Public' => '147, 51, 234'
+                ],
                 'chart_type' => 'pie',
             ]);
 
@@ -99,6 +108,17 @@ class DashboardController extends Controller
                 'chart_type' => 'line',
                 'continuous_time' => true,
                 'chart_color' => '1,255,0',
+            ], [
+                'chart_title' => 'Users by Days',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\User',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'day',
+                'filter_field' => 'created_at',
+                'filter_days' => 7,
+                'chart_type' => 'line',
+                'continuous_time' => true,
+                'chart_color' => '0,5,0',
             ]);
         } else {
             $users = User::where(['company_id' => auth()->user()->company_id])->orderBy('created_at', 'desc')->get();

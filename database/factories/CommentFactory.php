@@ -22,7 +22,7 @@ class CommentFactory extends Factory
             'report_id' => Report::all()->random()->id,
             'user_id' => User::all()->random()->id,
             'isi' => fake()->sentence(random_int(8, 30)),
-            'created_at' => fake()->dateTimeBetween('-7 days', '+1 days'),
+            'created_at' => fake()->dateTimeBetween('-2 months', 'now'),
         ];
     }
 }

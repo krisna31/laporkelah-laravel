@@ -34,13 +34,7 @@
                             <p class="text-center">{{ $reports->count() }} Report</p>
                         </a>
                     </div>
-                    <div class="container-fluid my-10 p-10 dark:bg-slate-300 rounded">
-                        {!! $chart4->renderHtml() !!}
-                    </div>
-                    <div class="container-fluid my-10 p-10 dark:bg-slate-300 rounded">
-                        {!! $chart->renderHtml() !!}
-                    </div>
-                    <div class="container-fluid flex flex-col justify-center md:flex-row items-center">
+                    <div class="container-fluid flex flex-col justify-center md:flex-row items-center mt-9">
                         <div
                             class="container-fluid flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded min-w-full">
                             @include('layouts.report-accordion', [
@@ -48,9 +42,12 @@
                                 'heading' => 'Latest Report',
                             ])
                         </div>
-                        <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
-
-                        </div>
+                    </div>
+                    <div class="container-fluid my-10 p-10 dark:bg-slate-300 rounded">
+                        {!! $chart4->renderHtml() !!}
+                    </div>
+                    <div class="container-fluid my-10 p-10 dark:bg-slate-300 rounded">
+                        {!! $chart->renderHtml() !!}
                     </div>
                     <div class="container-fluid flex flex-col gap-8 justify-center md:flex-row items-center">
                         <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
