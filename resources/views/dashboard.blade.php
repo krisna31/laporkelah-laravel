@@ -39,6 +39,16 @@
                     </div>
                     <div class="container-fluid flex flex-col gap-8 justify-center md:flex-row items-center">
                         <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
+                            @include('layouts.report-accordion', [
+                                'reports' => $reports->take(5),
+                            ])
+                        </div>
+                        <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
+
+                        </div>
+                    </div>
+                    <div class="container-fluid flex flex-col gap-8 justify-center md:flex-row items-center">
+                        <div class="container-fluid my-10 flex flex-col gap-8 justify-center w-1/2 h-1/2     rounded">
                             <h1 class="text-center">{{ $chart2->options['chart_title'] }}</h1>
                             {!! $chart2->renderHtml() !!}
                         </div>

@@ -4,8 +4,13 @@
     @endisset
     <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
         <div class="p-5 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            @isset($company)
+                @php
+                    $company = $company->reports->sortByDesc('created_at') ?? null;
+                @endphp
+            @endisset
             <ol class="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
-                @forelse ($company->reports->sortByDesc('created_at') ?? $reports->sortByDesc('created_at') as $report)
+                @forelse ($company ?? $reports->sortByDesc('created_at') as $report)
                     <li>
                         <a href="{{ route('report.show', $report) }}"
                             class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
