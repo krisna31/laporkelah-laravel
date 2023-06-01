@@ -18,7 +18,7 @@ class DashboardController extends Controller
             Auth::guard('web')->logout();
             request()->session()->invalidate();
             request()->session()->regenerateToken();
-            return redirect('/');
+            return redirect()->route('login')->with('failed', "You don't have permission to access this webpage with user account, Please use the admin account");
         }
 
         $this->authorize('isAdmin');
