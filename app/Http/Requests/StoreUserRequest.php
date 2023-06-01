@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Role;
+use Faker\Core\Number;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -14,7 +15,7 @@ class StoreUserRequest extends FormRequest
     {
         return in_array(auth()->user()->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN])
             &&
-            auth()->user()->role_id >= request()->role_id;
+            (int)request()->role_id >= auth()->user()->role_id;
     }
 
     /**

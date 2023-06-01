@@ -12,24 +12,24 @@
                     <div class="container-fluid flex    justify-between">
 
                         <a href="{{ route('company.index') }}"
-                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-green-700 dark:text-black">
+                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-400 dark:border-gray-200 dark:hover:bg-gray-200 dark:text-black">
                             <h2 class="text-center">Total Company</h2>
                             <p class="text-center">{{ $companies->count() }} Company</p>
                         </a>
                         <a href="{{ route('user.index') }}"
-                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-green-700 dark:text-black">
+                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-400 dark:border-gray-200 dark:hover:bg-gray-200 dark:text-black">
                             <h2 class="text-center">Total User</h2>
                             <p class="text-center">{{ $users->count() }} User</p>
                         </a>
                         @can('viewAny', App\Models\Role::class)
                             <a href="{{ route('role.index') }}"
-                                class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-green-700 dark:text-black">
+                                class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-400 dark:border-gray-200 dark:hover:bg-gray-200 dark:text-black">
                                 <h2 class="text-center">Total Role</h2>
                                 <p class="text-center">{{ $roles->count() }} Role</p>
                             </a>
                         @endcan
                         <a href="{{ route('report.index') }}"
-                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-green-700 dark:text-black">
+                            class="flex flex-col justify-center align-center max-w-sm p-12 bg-green-200 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-400 dark:border-gray-200 dark:hover:bg-gray-200 dark:text-black">
                             <h2 class="text-center">Total Report</h2>
                             <p class="text-center">{{ $reports->count() }} Report</p>
                         </a>

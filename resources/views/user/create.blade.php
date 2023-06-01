@@ -10,7 +10,6 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                         @csrf
-
                         <!-- Name -->
                         <div>
                             <div class="relative z-0 w-full mb-6 group">
