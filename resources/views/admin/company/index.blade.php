@@ -32,7 +32,7 @@
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <th scope="row"
                                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img class="w-10 h-10 rounded-full"
+                                            <img class="w-10 h-10 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500"
                                                 src="{{ file_exists(public_path("storage/company/$belongsTo->logo") ? asset("storage/company/$belongsTo->logo") : asset('logo.png')) }}"
                                                 alt="{{ $belongsTo->nama }}">
                                             <div class="pl-3">

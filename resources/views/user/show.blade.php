@@ -47,7 +47,7 @@
                                         {{ $user->id }}
                                     </td>
                                     <td>
-                                        <img class="w-10 h-10 rounded-full"
+                                        <img class="w-10 h-10 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500"
                                             src="{{ asset('/storage/user/' . $user->foto) }}" alt="{{ $user->name }}">
                                     </td>
                                     <td class="px-6 py-4">

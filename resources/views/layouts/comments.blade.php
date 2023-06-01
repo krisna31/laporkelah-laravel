@@ -1,7 +1,8 @@
 @forelse ($report->comments ?? $comments as $comment)
     <div class="flex flex-row gap-5 w-1/2">
         <img src="{{ file_exists(public_path('storage/user/' . $comment->user->foto)) ? asset('storage/user/' . $comment->user->foto) : asset('default.png') }}"
-            alt="{{ $comment->user->name }}" class="w-10 h-10 rounded-full me-4">
+            alt="{{ $comment->user->name }}"
+            class="w-10 h-10 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500 me-4">
         <div class="flex flex-col justify-between gap-2">
             <div class="flex flex-row">{{ $comment->user->name }} |
                 {{ $comment->created_at->diffForHumans() }}

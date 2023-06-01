@@ -57,7 +57,7 @@
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <th scope="row"
                                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img class="w-10 h-10 rounded-full"
+                                            <img class="w-10 h-10 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500"
                                                 src="storage/company/{{ $company->logo }}" alt="{{ $company->nama }}">
                                             <div class="pl-3">
                                                 <div class="text-base font-semibold">{{ $company->nama }}
@@ -95,8 +95,7 @@
                                                     <span class="sr-only">Edit Company</span>
                                                 </button>
                                             </a>
-                                            <button type="button"
-                                                data-modal-target="popup-modal-{{ $company->id }}"
+                                            <button type="button" data-modal-target="popup-modal-{{ $company->id }}"
                                                 data-modal-toggle="popup-modal-{{ $company->id }}"
                                                 class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -114,8 +113,8 @@
                                                         <button type="button"
                                                             class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                                                             data-modal-hide="popup-modal-{{ $company->id }}">
-                                                            <svg aria-hidden="true" class="w-5 h-5"
-                                                                fill="currentColor" viewBox="0 0 20 20"
+                                                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                                viewBox="0 0 20 20"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path fill-rule="evenodd"
                                                                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
