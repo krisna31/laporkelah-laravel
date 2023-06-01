@@ -60,6 +60,9 @@ class DashboardController extends Controller
                 'model' => 'App\Models\Report',
                 'group_by_field' => 'status',
                 'labels' => ['0' => 'Close', '1' => 'Open'],
+                'chart_color' => [
+                    'Close' => '200,12,12', 'Open' => '0,255,0'
+                ],
                 'chart_type' => 'pie',
             ]);
 
@@ -70,6 +73,32 @@ class DashboardController extends Controller
                 'group_by_field' => 'created_at',
                 'group_by_period' => 'year',
                 'chart_type' => 'pie',
+            ]);
+
+            $now = date('Y-m-d H:i:s');
+
+            $chart4 = new LaravelChart([
+                'chart_title' => 'Reports by Days',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Report',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'day',
+                'filter_field' => 'created_at',
+                'filter_days' => 7,
+                'chart_type' => 'line',
+                'continuous_time' => true,
+                'chart_color' => '255,0,0',
+            ], [
+                'chart_title' => 'Comments by Days',
+                'report_type' => 'group_by_date',
+                'model' => 'App\Models\Comment',
+                'group_by_field' => 'created_at',
+                'group_by_period' => 'day',
+                'filter_field' => 'created_at',
+                'filter_days' => 7,
+                'chart_type' => 'line',
+                'continuous_time' => true,
+                'chart_color' => '1,255,0',
             ]);
         } else {
             $users = User::where(['company_id' => auth()->user()->company_id])->orderBy('created_at', 'desc')->get();
@@ -143,6 +172,7 @@ class DashboardController extends Controller
                 'chart',
                 'chart2',
                 'chart3',
+                'chart4',
             )
         );
     }

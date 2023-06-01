@@ -2,7 +2,10 @@
     <div id="accordion-open-body-{{ $company->id }}" @if (Str::contains(request()->fullUrl(), 'report')) class="hidden" @endif
         aria-labelledby="accordion-open-heading-{{ $company->id }}">
     @endisset
-    <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
+    <div class="p-5 border @if (Str::contains(request()->fullUrl(), 'report')) border-t-0 @endif border-gray-200 dark:border-gray-700">
+        @isset($heading)
+            <h1 class="text-center bold my-5 text-3xl mt-10">{{ $heading }}</h1>
+        @endisset
         <div class="p-5 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
             @isset($company)
                 @php
