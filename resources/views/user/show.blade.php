@@ -71,8 +71,15 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <h1 class="text-center bold my-5 text-3xl mt-10">Reports Belongs to This User</h1>
+                        @include('layouts.report-accordion', [
+                            'reports' => $user->reports,
+                        ])
+                        <h1 class="text-center bold my-5 text-3xl mt-10">Comments Belongs to This User</h1>
+                        @include('layouts.comments', [
+                            'comments' => $user->comments,
+                        ])
                     </div>
-
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="relative overflow-x-auto sm:rounded-lg">
+                    <div class="relative overflow-x-auto sm:rounded-lg my-5">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -54,8 +54,13 @@
                             </tbody>
                         </table>
                     </div>
+                    <h1 class="text-center bold my-5 text-3xl">Users Belongs to This Company</h1>
                     @include('layouts.table-users', [
                         'users' => $company->users,
+                    ])
+                    <h1 class="text-center bold my-5 text-3xl">Reports Belongs to This Company</h1>
+                    @include('layouts.report-accordion', [
+                        'company' => $company,
                     ])
                 </div>
             </div>
