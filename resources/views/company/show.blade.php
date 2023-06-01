@@ -15,9 +15,6 @@
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
-                                        ID Perusahaan
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         Nama Perusahaan
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -34,13 +31,11 @@
                             <tbody>
                                 <tr
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-4">
-                                        {{ $company->id }}
-                                    </td>
                                     <th scope="row"
                                         class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                         <img class="w-10 h-10 rounded-full"
-                                            src="../storage/company/{{ $company->logo }}" alt="{{ $company->nama }}">
+                                            src="{{ public_path('/storage/company' . $company->foto) }}"
+                                            alt="{{ $company->nama }}">
                                         <div class="pl-3">
                                             <div class="text-base font-semibold">{{ $company->nama }}
                                             </div>
@@ -59,7 +54,9 @@
                             </tbody>
                         </table>
                     </div>
-
+                    @include('layouts.table-users', [
+                        'users' => $company->users,
+                    ])
                 </div>
             </div>
         </div>
