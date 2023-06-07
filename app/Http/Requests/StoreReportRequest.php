@@ -13,7 +13,7 @@ class StoreReportRequest extends FormRequest
     public function authorize(): bool
     {
         return auth()->user()->role_id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->role_id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id && auth()->user()->id == request()->user_id) ||
+            (auth()->user()->role_id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id) ||
             (auth()->user()->role_id == Role::$IS_USER && auth()->user()->company_id == $this->company_id && auth()->user()->id == request()->user_id);
     }
 
