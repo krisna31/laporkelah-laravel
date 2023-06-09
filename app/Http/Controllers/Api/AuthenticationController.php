@@ -26,8 +26,12 @@ class AuthenticationController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-
-        return $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken($request->device_name)->plainTextToken;
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+            'message' => 'Login '. $user->name .' Berhasil'
+        ], 200);
     }
     public function register(Request $request)
     {
@@ -44,10 +48,21 @@ class AuthenticationController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken($request->device_name)->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+            'message' => 'User '. $user->name .' Berhasil Dibuat'
+        ], 201);
     }
     public function logout(Request $request)
     {
         return $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout Berhasil'
+        ], 204);
     }
 }
