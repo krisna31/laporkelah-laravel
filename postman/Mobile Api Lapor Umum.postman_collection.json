@@ -662,7 +662,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Spesific Report",
+					"name": "Get Spesific Report (see the report id)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1027,40 +1027,6 @@
 					"response": []
 				},
 				{
-					"name": "Get Spesific",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base-path}}/comment/{{created_comment_id}}",
-							"host": [
-								"{{base-path}}"
-							],
-							"path": [
-								"comment",
-								"{{created_comment_id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Store",
 					"event": [
 						{
@@ -1115,6 +1081,40 @@
 							],
 							"path": [
 								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Spesific",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base-path}}/comment/{{created_comment_id}}",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"comment",
+								"{{created_comment_id}}"
 							]
 						}
 					},
