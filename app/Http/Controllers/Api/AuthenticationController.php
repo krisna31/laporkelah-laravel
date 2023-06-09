@@ -58,11 +58,11 @@ class AuthenticationController extends Controller
     }
     public function logout(Request $request)
     {
-        return $request->user()->currentAccessToken()->delete();
+        $success = $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'success' => true,
-            'message' => 'Logout Berhasil'
-        ], 204);
+            'success' => $success ? true : false,
+            'message' => 'Berhasil Logout'
+        ], 200);
     }
 }
