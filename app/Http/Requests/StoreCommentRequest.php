@@ -13,10 +13,10 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $company = Report::find($this->report_id)->company;
+        $company = Report::find($this->report_id)->company ?? null;
         return auth()->user()->id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->id == Role::$IS_ADMIN && (auth()->user()->company_id == $company->id || $company->is_public)) ||
-            (auth()->user()->id == Role::$IS_USER && (auth()->user()->company_id == $company->id || $company->is_public));
+            (auth()->user()->id == Role::$IS_ADMIN && ($company->is_public ?? true || auth()->user()->company_id == $company->id ?? true)) ||
+            (auth()->user()->id == Role::$IS_USER && ($company->is_public ?? true || auth()->user()->company_id == $company->id ?? true));
     }
 
     /**
