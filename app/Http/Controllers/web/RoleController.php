@@ -19,7 +19,7 @@ class RoleController extends Controller
         $this->authorize('viewAny', Role::class);
 
         if (request('search'))
-            $roles = Role::where('nama', 'LIKE', '%' . request('search') . '%')->paginate(Utils::$PAGINATE);
+            $roles = Role::where('jabatan', 'LIKE', '%' . request('search') . '%')->paginate(Utils::$PAGINATE);
         else
             $roles = Role::paginate(Utils::$PAGINATE);
 
