@@ -111,6 +111,10 @@ class CompanyController extends Controller
         $validated = $request->validated();
 
         if ($request->img) {
+            if (!Storage::exists("app\\public\\company")) {
+                File::makeDirectory(storage_path("app\\public\\company"), $mode = 0777, true, true);
+            }
+            
             // delete old picture
             $image_path = public_path('/storage/company/' . $company->logo);
             File::exists($image_path) && File::delete($image_path);

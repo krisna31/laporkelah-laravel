@@ -128,6 +128,11 @@ class UserController extends Controller
             null : $validated['company_id'];
 
         if ($request->img) {
+            // check folder exist or not
+            if (!Storage::exists("app\\public\\user")) {
+                File::makeDirectory(storage_path("app\\public\\user"), $mode = 0777, true, true);
+            }
+
             // delete old picture
             $image_path = public_path('/storage/user/' . $user->foto);
             File::exists($image_path) && File::delete($image_path);

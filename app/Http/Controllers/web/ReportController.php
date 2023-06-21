@@ -124,6 +124,9 @@ class ReportController extends Controller
         $validated = $request->validated();
         $tempFile = TemporaryFile::where('folder', $request->img)->first();
         if ($tempFile) {
+            if (!Storage::exists("app\\public\\report")) {
+                File::makeDirectory(storage_path("app\\public\\report"), $mode = 0777, true, true);
+            }
             $filename = uniqid() . '-' . $tempFile->filename;
 
             // delete old picture
