@@ -15,8 +15,8 @@ class StoreCommentRequest extends FormRequest
     {
         $company = Report::find($this->report_id)->company ?? null;
         return auth()->user()->id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->id == Role::$IS_ADMIN && ($company->is_public ?? true || auth()->user()->company_id == $company->id ?? true)) ||
-            (auth()->user()->id == Role::$IS_USER && ($company->is_public ?? true || auth()->user()->company_id == $company->id ?? true));
+            (in_array(auth()->user()->id, [Role::$IS_ADMIN, Role::$IS_USER]) && 
+            (($company->is_public ?? true) || (auth()->user()->company_id == $company->id ?? true)));
     }
 
     /**

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('updated_by')
                 ->nullable();
             $table->foreign('updated_by')
+                ->nullable()
                 ->on('users')
                 ->references('id')
                 ->cascadeOnDelete()
