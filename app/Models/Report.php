@@ -27,6 +27,11 @@ class Report extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+
     public function upvoteUsers()
     {
         return $this->belongsToMany(User::class, 'upvote_report', 'report_id', 'user_id');

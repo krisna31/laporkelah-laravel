@@ -31,7 +31,7 @@ class UpdateReportRequest extends FormRequest
             'updated_by' => 'required',
             'status' => 'required|boolean',
             'alasan_close' => 'required_if:status,0|string|max:1000',
-            'foto' => 'string',
+            'foto' => 'image',
         ];
     }
 }

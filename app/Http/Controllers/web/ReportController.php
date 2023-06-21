@@ -149,7 +149,8 @@ class ReportController extends Controller
             File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
             $tempFile->delete();
         }
-
+        
+        $validated['updated_by'] = auth()->user()->id;
         // Create a project with the validated data.
         $isSuccess = $report->updateOrFail($validated);
         if ($isSuccess)

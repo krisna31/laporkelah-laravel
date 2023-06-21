@@ -20,9 +20,11 @@ class ReportResource extends JsonResource
             'keterangan' => $this->keterangan,
             'status' => $this->status,
             'foto' => $this->foto,
+            'created_by' => $this->user->name,
             // 'user' => new UserResource($this->whenLoaded('user')),
             // 'company' => new CompanyResource($this->whenLoaded('company')),
             'comments' => $this->mergeWhen($request->comments, CommentResources::collection($this->comments)),
+            'updated_by' => $this->when(!$this->status, $this->updatedBy->name ?? 'default'),
             'alasan_close' => $this->when(!$this->status, $this->alasan_close),
             'created_at' => $this->created_at,
         ];
