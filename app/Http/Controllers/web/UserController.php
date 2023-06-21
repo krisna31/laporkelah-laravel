@@ -141,7 +141,7 @@ class UserController extends Controller
             $tempFile = TemporaryFile::where('folder', $request->img)->first();
             if ($tempFile) {
                 $filename = uniqid() . '-' . $tempFile->filename;
-                FIle::copy(
+                File::copy(
                     storage_path("app\\img\\tmp\\$tempFile->folder\\$tempFile->filename"),
                     storage_path("app\\public\\user\\$filename")
                 );
