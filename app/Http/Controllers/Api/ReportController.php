@@ -25,7 +25,7 @@ class ReportController extends Controller
                 ->orWhereHas('company', function ($query) {
                     $query->where('is_public', 1);
                 });
-        })->with('comments')->get();
+        })->orderBy('created_at', 'desc')->with('comments')->get();
 
         return ReportResource::collection($reports);
     }

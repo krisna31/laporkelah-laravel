@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Comment::class);
-        $comments = Comment::where('user_id', auth()->user()->id)->get();
+        $comments = Comment::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return CommentResources::collection($comments);
     }
 
