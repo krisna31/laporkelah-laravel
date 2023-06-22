@@ -28,6 +28,7 @@ class ReportResource extends JsonResource
             'updated_by' => $this->when(!$this->status, $this->updatedBy->name ?? 'default'),
             'alasan_close' => $this->when(!$this->status, $this->alasan_close),
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
