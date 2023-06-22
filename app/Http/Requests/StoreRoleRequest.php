@@ -12,7 +12,7 @@ class StoreRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->id == Role::$IS_SUPERADMIN;
+        return auth()->user()->role_id == Role::$IS_SUPERADMIN;
     }
 
     /**
