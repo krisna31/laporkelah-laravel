@@ -9,6 +9,7 @@ use App\Http\Resources\ReportResource;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ReportController extends Controller
@@ -36,6 +37,10 @@ class ReportController extends Controller
     {
         $this->authorize('create', Report::class);
         try {
+            // check folder exist or not
+            if (!Storage::exists("app\\public\\report")) {
+                File::makeDirectory(storage_path("app\\public\\report"), $mode = 0777, true, true);
+            }
             $validated = $request->validated();
             $file = $request->file('foto');
             $folder = "public\\report";
@@ -43,7 +48,7 @@ class ReportController extends Controller
             $file->storeAs($folder, $filename);
 
             $validated['user_id'] = auth()->user()->id;
-            $validated['company_id'] = auth()->user()->company_id;
+            $validated['company_id'] = $request->company_id;
             $validated['status'] = 1;
             $validated['foto'] = $filename;
 
@@ -71,21 +76,28 @@ class ReportController extends Controller
     {
         $this->authorize('update', $report);
         try {
-            // delete old picture
-            $image_path = public_path('/storage/report' . $report->foto);
-            File::exists($image_path) && File::delete($image_path);
+            // check folder exist or not
+            if (!Storage::exists("app\\public\\report")) {
+                File::makeDirectory(storage_path("app\\public\\report"), $mode = 0777, true, true);
+            }
+            if ($request->hasFile('foto')) {
+                // delete old picture
+                $image_path = public_path('/storage/report' . $report->foto);
+                File::exists($image_path) && File::delete($image_path);
 
-            $validated = $request->validated();
-            $file = $request->file('foto');
-            $folder = "public\\report";
-            $filename = uniqid() . '-' . $file->getClientOriginalName();
-            $file->storeAs($folder, $filename);
+                $validated = $request->validated();
+                $file = $request->file('foto');
+                $folder = "public\\report";
+                $filename = uniqid() . '-' . $file->getClientOriginalName();
+                $file->storeAs($folder, $filename);
 
-            $validated['updated_by'] = auth()->user()->id;
-            $validated['foto'] = $filename;
-
+                $validated['updated_by'] = auth()->user()->id;
+                $validated['foto'] = $filename;
+            } else {
+                $validated = $request->validated();
+                $validated['updated_by'] = auth()->user()->id;
+            }
             $report->update($validated);
-
             return new ReportResource($report);
         } catch (\Exception $exception) {
             throw new HttpException(400, "Invalid data - {$exception->getMessage()}");

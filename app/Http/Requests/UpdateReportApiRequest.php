@@ -27,7 +27,7 @@ class UpdateReportApiRequest extends FormRequest
             'keterangan' => 'required|string|max:1000',
             'status' => 'required|boolean',
             'alasan_close' => 'required_if:status,0',
-            'foto' => 'required|image|file',
+            'foto' => 'image',
         ];
     }
 }

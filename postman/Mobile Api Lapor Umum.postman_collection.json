@@ -834,14 +834,14 @@
 									"type": "text"
 								},
 								{
-									"key": "status",
-									"value": "1",
-									"type": "text"
-								},
-								{
 									"key": "foto",
 									"type": "file",
 									"src": "Screenshot (1).png"
+								},
+								{
+									"key": "company_id",
+									"value": "{{his_company_id}}",
+									"type": "text"
 								}
 							]
 						},
@@ -932,7 +932,72 @@
 					"response": []
 				},
 				{
-					"name": "Edit a Report status 1",
+					"name": "Edit a Report status 1 and without photo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "lorem",
+									"type": "text"
+								},
+								{
+									"key": "keterangan",
+									"value": "lorem ipsum dolor comet",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "Screenshot (2).png",
+									"disabled": true
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-path}}/report/{{created_report_id}}",
+							"host": [
+								"{{base-path}}"
+							],
+							"path": [
+								"report",
+								"{{created_report_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Report status 1 wih PHoto",
 					"request": {
 						"auth": {
 							"type": "bearer",

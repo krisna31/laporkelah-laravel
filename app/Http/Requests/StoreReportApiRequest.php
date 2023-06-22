@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Company;
 use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,7 +13,11 @@ class StoreReportApiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return in_array(auth()->user()->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
+        $company = Company::find($this->company_id);
+        return auth()->user()->role_id == Role::$IS_SUPERADMIN ||
+            (in_array(auth()->user()->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER])
+                &&
+                ($company->id == auth()->user()->company_id || $company->is_public));
     }
 
     /**
@@ -24,9 +29,10 @@ class StoreReportApiRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
+            'company_id' => 'required|exists:companies,id',
             'keterangan' => 'required|string|max:1000',
             'alasan_close' => 'required_if:status,0',
-            'foto' => 'required|image|file',
+            'foto' => 'required|image',
         ];
     }
 }
