@@ -23,8 +23,8 @@ class CommentPolicy
     public function view(User $user, Comment $comment): bool
     {
         return $user->id == Role::$IS_SUPERADMIN ||
-            ($user->id == Role::$IS_ADMIN && ($user->company_id == $comment->report->company_id || $comment->report->company->is_public)) ||
-            ($user->id == Role::$IS_USER && ($user->company_id == $comment->report->company_id || $comment->report->company->is_public));
+            ($user->role_id == Role::$IS_ADMIN && ($user->company_id == $comment->report->company_id || $comment->report->company->is_public)) ||
+            ($user->role_id == Role::$IS_USER && ($user->company_id == $comment->report->company_id || $comment->report->company->is_public));
     }
 
     /**
@@ -32,7 +32,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
+        return in_array($user->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER]);
     }
 
     /**
@@ -40,9 +40,9 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment): bool
     {
-        return $user->id == Role::$IS_SUPERADMIN ||
-            ($user->id == Role::$IS_ADMIN && $user->company_id == $comment->report->company_id) ||
-            ($user->id == Role::$IS_USER && $user->company_id == $comment->report->company_id && $comment->user_id == $user->id);
+        return $user->role_id == Role::$IS_SUPERADMIN ||
+            ($user->role_id == Role::$IS_ADMIN && $user->company_id == $comment->report->company_id) ||
+            ($user->role_id == Role::$IS_USER && $user->company_id == $comment->report->company_id && $comment->user_id == $user->id);
     }
 
     /**

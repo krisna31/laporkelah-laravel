@@ -46,7 +46,7 @@
                                         <td class="px-6 py-4 flex gap-3">
                                             <a href="{{ route('company.show', $belongsTo) }}" type="button"
                                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                                <button type="button" onclick="return confirm('Are you sure?')"
+                                                <button type="button"
                                                     class="text-sky-700 border border-sky-700 hover:bg-sky-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-sky-500 dark:text-sky-500 dark:hover:text-white dark:focus:ring-sky-800 dark:hover:bg-sky-500">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
