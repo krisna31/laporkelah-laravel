@@ -42,7 +42,7 @@ class CommentPolicy
     {
         return $user->role_id == Role::$IS_SUPERADMIN ||
             ($user->role_id == Role::$IS_ADMIN && $user->company_id == $comment->report->company_id) ||
-            ($user->role_id == Role::$IS_USER && $user->company_id == $comment->report->company_id && $comment->user_id == $user->id);
+            ($user->role_id == Role::$IS_USER && ($user->company_id ?? true == $comment->report->company_id) && $comment->user_id == $user->id);
     }
 
     /**
@@ -52,7 +52,7 @@ class CommentPolicy
     {
         return $user->role_id == Role::$IS_SUPERADMIN ||
             ($user->role_id == Role::$IS_ADMIN && $user->company_id == $comment->report->company_id) ||
-            ($user->role_id == Role::$IS_USER && $user->company_id == $comment->report->company_id && $comment->user_id == $user->id);
+            ($user->role_id == Role::$IS_USER && ($user->company_id ?? true == $comment->report->company_id) && $comment->user_id == $user->id);
     }
 
     /**
