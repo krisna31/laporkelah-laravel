@@ -91,10 +91,10 @@
                         <small class="ml-2 font-semibold text-gray-500 dark:text-gray-400">Belongs to Company :
                             {{ $report->company->nama }}</small>
                         <p class="text-gray-500 dark:text-gray-400">Keterangan : {{ $report->keterangan }}</p>
-                        @if (!$report->status)
+                        @if (!$report->status && $report->updatedBy)
                             <p class="text-gray-500 dark:text-gray-400">Closed By : {{ $report->updatedBy->name }}</p>
                         @endif
-                        @if (!$report->status)
+                        @if (!$report->status && $report->alasan_close)
                             <p class="text-gray-500 dark:text-gray-400">Alasan Close : {{ $report->alasan_close }}</p>
                         @endif
 
