@@ -12,7 +12,9 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return in_array(auth()->user()->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN]);
+        return in_array(auth()->user()->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN])
+            &&
+            (int)request()->role_id >= auth()->user()->role_id;
     }
 
     /**

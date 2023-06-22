@@ -108,8 +108,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
-        $companies = Company::all();
-        $roles = Role::all();
+        $companies = auth()->user()->role_id == Role::$IS_SUPERADMIN ? Company::all() : Company::where('id', '=', auth()->user()->company_id)->get();
+        $roles = Role::where('id', '>=', auth()->user()->role_id)->get();
 
         return view('user.edit', compact('user', 'companies', 'roles'));
     }
