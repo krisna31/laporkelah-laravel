@@ -17,7 +17,7 @@ class StoreReportApiRequest extends FormRequest
         return auth()->user()->role_id == Role::$IS_SUPERADMIN ||
             (in_array(auth()->user()->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER])
                 &&
-                ($company->id == auth()->user()->company_id || $company->is_public));
+                (($company->id ?? true) == auth()->user()->company_id || $company->is_public));
     }
 
     /**

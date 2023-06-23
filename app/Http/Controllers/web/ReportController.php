@@ -109,7 +109,16 @@ class ReportController extends Controller
     public function edit(Report $report)
     {
         $this->authorize('update', $report);
-        $companies = Company::all();
+        if (auth()->user()->role_id === Role::$IS_SUPERADMIN) {
+            // Get all projects.
+            $companies = Company::all();
+        } else {
+            // Get the projects that belong to the user.
+            $companies = Company::where(function ($query) {
+                $query->where('id', auth()->user()->company_id)
+                    ->orWhere('is_public', 1);
+            })->get();
+        }
         return view('superadmin.report.edit', compact('report', 'companies'));
     }
 
@@ -149,7 +158,7 @@ class ReportController extends Controller
             File::deleteDirectory(storage_path("app\\img\\tmp\\$tempFile->folder"));
             $tempFile->delete();
         }
-        
+
         $validated['updated_by'] = auth()->user()->id;
         // Create a project with the validated data.
         $isSuccess = $report->updateOrFail($validated);

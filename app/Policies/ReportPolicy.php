@@ -41,8 +41,8 @@ class ReportPolicy
     public function update(User $user, Report $report): bool
     {
         return $user->role_id == Role::$IS_SUPERADMIN ||
-            ($user->role_id == Role::$IS_ADMIN && $user->company_id == $report->company_id) ||
-            ($user->role_id == Role::$IS_USER && $user->company_id == $report->company_id && $report->user_id == $user->id);
+            (($user->role_id == Role::$IS_ADMIN && $report->user_id == $user->id) || $user->company_id == $report->company_id) ||
+            ($user->role_id == Role::$IS_USER && $report->user_id == $user->id);
     }
 
     /**
@@ -51,8 +51,8 @@ class ReportPolicy
     public function delete(User $user, Report $report): bool
     {
         return $user->role_id == Role::$IS_SUPERADMIN ||
-            ($user->role_id == Role::$IS_ADMIN && $user->company_id == $report->company_id) ||
-            ($user->role_id == Role::$IS_USER && $user->company_id == $report->company_id && $report->user_id == $user->id);
+            (($user->role_id == Role::$IS_ADMIN && $report->user_id == $user->id) || $user->company_id == $report->company_id) ||
+            ($user->role_id == Role::$IS_USER && $report->user_id == $user->id);
     }
 
     /**

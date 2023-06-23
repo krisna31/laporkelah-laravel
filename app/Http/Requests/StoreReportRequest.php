@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Company;
 use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,9 +13,11 @@ class StoreReportRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        $company = Company::find($this->company_id);
         return auth()->user()->role_id == Role::$IS_SUPERADMIN ||
-            (auth()->user()->role_id == Role::$IS_ADMIN && auth()->user()->company_id == $this->company_id) ||
-            (auth()->user()->role_id == Role::$IS_USER && auth()->user()->company_id == $this->company_id && auth()->user()->id == request()->user_id);
+            (in_array(auth()->user()->role_id, [Role::$IS_SUPERADMIN, Role::$IS_ADMIN, Role::$IS_USER])
+                &&
+                (($company->id ?? true) == auth()->user()->company_id || $company->is_public));
     }
 
     /**
