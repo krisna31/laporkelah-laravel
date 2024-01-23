@@ -28,11 +28,11 @@ return new class extends Migration
                 ->references('id')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->text('title');
-            $table->text('keterangan');
+            $table->string('title');
+            $table->string('keterangan');
             $table->boolean('status');
-            $table->text('alasan_close')->nullable();
-            $table->text('foto')->unique();
+            $table->string('alasan_close')->nullable();
+            $table->string('foto')->unique();
             $table->timestamps();
         });
     }
